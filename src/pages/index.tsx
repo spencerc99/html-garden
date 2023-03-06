@@ -11,6 +11,7 @@ export default function Home() {
     <>
       <Head>
         <title>html garden</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <hgroup>
         <h1>html garden</h1>
