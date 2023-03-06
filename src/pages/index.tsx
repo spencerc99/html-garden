@@ -1,23 +1,28 @@
+import Head from "next/head";
+import { Garden } from "../components/Garden";
 import styles from "../styles/Home.module.scss";
-import { Head } from "next/document";
 
 export default function Home() {
+  const numSpeciesBlooming = 4;
+  const totalSpecies = 10;
+  const seasonName = "spring";
+
   return (
     <>
       <Head>
-        <link rel="icon" type="image/svg+xml" href="./tk.svg" />
-        <link rel="apple-touch-icon" href="./tk.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
-          rel="stylesheet"
-        />
+        <title>html garden</title>
       </Head>
+      <hgroup>
+        <h1>html garden</h1>
+        <p>
+          there are {numSpeciesBlooming}/{totalSpecies} species blooming
+          currently. we are in {seasonName}
+        </p>
+      </hgroup>
+      <main>
+        <Garden />
+      </main>
+      <footer>planted by spencer chang</footer>
     </>
   );
 }

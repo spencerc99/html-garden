@@ -1,9 +1,23 @@
+// Ghoul Glint Palette from https://meodai.github.io/poline/
+$color-green-glint: #d7edc4;
+$color-fiddle-leaf-fig: #a8c276;
+$color-ghoul: #61773b;
+$color-elite-teal: #10302d;
+$color-olympic-blue: #5f93d8;
+$color-darkest-forest: #293b1a;
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  background: $color-fiddle-leaf-fig;
+  padding: 2em 4em;
+  color: $color-elite-teal;
 }
 
 a {
