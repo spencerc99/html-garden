@@ -16,9 +16,11 @@ export function Plant() {
     return (p5: p5Type) => {
       let systems = [];
       // A
-      var a = new LSystem(p5, "F", 25.7, 75, 0.5, 6);
+      //   const numIterations = 6;
+      const numIterations = 2;
+      var a = new LSystem(p5, "F", 25.7, 75, 0.5, numIterations);
       a.color = p5.color(255, 243, 217);
-      a.addRule("F", "F[+F]F[-F]F");
+      a.addRule("F", "F[+FF]F[-FF]F");
 
       // B
       var b = new LSystem(p5, "F", 20.0, 290, 0.5, 5);
@@ -55,6 +57,8 @@ export function Plant() {
   const [system, setSystem] = useState(undefined);
   const setup = (p5: p5Type) => {
     p5.createCanvas(400, 400);
+    const div = p5.createElement("div");
+    div.id("plant");
     p5.background(51);
     p5.angleMode(p5.DEGREES);
     /**

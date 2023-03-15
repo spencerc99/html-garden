@@ -22,6 +22,10 @@ export class LSystem {
   texture: any;
   maxIterations: number;
   timesDrawn: number;
+  a: number;
+  x: number;
+  y: number;
+  stack: number[][];
 
   constructor(
     p5: p5Type,
@@ -46,31 +50,60 @@ export class LSystem {
       window.innerHeight
     );
     this.timesDrawn = 0;
-    this.maxIterations = Infinity;
+    this.maxIterations = 3;
+    this.stack = [];
+    this.x = 0;
+    this.y = 0;
+    this.a = 0;
+
     this.addInstruction("F", () => {
       this.p5.line(0, 0, 0, -this.lineLength);
-      //   const elem = this.p5.createElement(tag, tag);
-      //   elem.style = Object.entries({
-      //     // fill in rotation to match with rotation of the line
-      //     transform: `rotate(${this.p5.radians(this.angle)}deg)`,
-      //     width: `${this.lineLength}px`,
-      //   })
-      //     .map(([key, value]) => `${key}: ${value}`)
-      //     .join(";");
-      //   elem.position(0, this.lineLength);
+
+      const child = document.createElement(tag);
+      child.innerText = tag;
+      child.style = Object.entries({
+        ...child.style,
+        // fill in rotation to match with rotation of the line
+        transform: `rotate(${this.a}deg)`,
+        width: `${this.lineLength}px`,
+        // TODO: need origin point here
+        position: "absolute",
+        left: `${-(
+          this.x +
+          0 * Math.cos(this.a) -
+          -this.lineLength * Math.sin(this.a)
+        )}px`,
+        bottom: `${-(
+          this.y +
+          -this.lineLength * Math.cos(this.a) +
+          0 * Math.sin(this.a)
+        )}px`,
+      })
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(";");
+      document.querySelector("#plant").appendChild(child);
       this.p5.translate(0, -this.lineLength);
+      this.x += 0 * Math.cos(this.a) - -this.lineLength * Math.sin(this.a);
+      this.y += -this.lineLength * Math.cos(this.a) + 0 * Math.sin(this.a);
     });
     this.addInstruction("+", () => {
       this.p5.rotate(-this.angle);
+      this.a += -this.angle;
     });
     this.addInstruction("-", () => {
       this.p5.rotate(this.angle);
+      this.a += this.angle;
     });
     this.addInstruction("[", () => {
       this.p5.push();
+      this.stack.push([this.x, this.y, this.a]);
     });
     this.addInstruction("]", () => {
       this.p5.pop();
+      const [newX, newY, newA] = this.stack.pop();
+      this.x = newX;
+      this.y = newY;
+      this.a = newA;
     });
     this.sentence = this.axiom;
   }
@@ -130,19 +163,17 @@ export class LSystem {
 
 export class HtmlLSystem {
   rules: Record<string, InsertNodeData[]>;
-  axiom: string;
   iterations: number;
   rootNode: Node;
 
   constructor(rules: Record<string, InsertNodeData[]>, rootNode: Node) {
     this.rules = rules;
-    // this.axiom = axiom;
     this.iterations = 0;
     this.rootNode = rootNode;
   }
 
   iterate() {
-    const newChildren = this.rootNode.extend(this.axiom);
+    const newChildren = this.rootNode.extend(this.rules);
     this.iterations++;
     return newChildren;
   }
@@ -162,13 +193,11 @@ const DefaultAngle = 30;
 const DefaultLineLength = 5;
 
 interface NodeOptions {
-  rules: Record<string, InsertNodeData[]>;
   angle?: number;
   lineLength?: number;
 }
 
 export class Node {
-  rules: Record<string, InsertNodeData[]>;
   value: NodeData;
   children: Node[];
   angle: number;
@@ -178,7 +207,7 @@ export class Node {
 
   constructor(
     value: NodeData,
-    { rules, angle = DefaultAngle, lineLength = DefaultLineLength }: NodeOptions
+    { angle = DefaultAngle, lineLength = DefaultLineLength }: NodeOptions = {}
   ) {
     this.value = value;
     this.children = [];
@@ -188,26 +217,27 @@ export class Node {
     this.extended = true;
   }
 
-  extend(character: string) {
-    const newChildrenToInsert: InsertNodeData[] = this.rules[character];
-    const { x, y } = this.value;
-    const newChildren = [];
-    for (const newChild of newChildrenToInsert) {
-      const childX = x + Math.cos(this.currentAngle) * this.lineLength;
-      const childY = y + Math.sin(this.currentAngle) * this.lineLength;
+  extend(rules: Record<string, InsertNodeData[]>) {
+    if (!this.extended) {
+      const newChildrenToInsert: InsertNodeData[] = rules[character];
+      const { x, y } = this.value;
+      const newChildren = [];
+      for (const newChild of newChildrenToInsert) {
+        const childX = x + Math.cos(this.currentAngle) * this.lineLength;
+        const childY = y + Math.sin(this.currentAngle) * this.lineLength;
 
-      newChildren.push(
-        new Node(
-          {
+        newChildren.push(
+          new Node({
             x: childX,
             y: childY,
             ...newChild,
-          },
-          { rules: this.rules }
-        )
-      );
-      this.currentAngle += this.angle;
+          })
+        );
+        this.currentAngle += this.angle;
+      }
+      this.children.push(...newChildren);
+      this.extended = true;
+    } else {
     }
-    this.children.push(...newChildren);
   }
 }

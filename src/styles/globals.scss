@@ -31,3 +31,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+#plant {
+  position: relative;
+  height: 200px;
+  display: flex;
+  left: 50%;
+}
