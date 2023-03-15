@@ -18,9 +18,14 @@ export function Plant() {
       // A
       //   const numIterations = 6;
       const numIterations = 2;
+      //   var a = new LSystem(p5, "F", 25.7, 75, 0.5, numIterations);
       var a = new LSystem(p5, "F", 25.7, 75, 0.5, numIterations);
       a.color = p5.color(255, 243, 217);
-      a.addRule("F", "F[+FF]F[-FF]F");
+      //   TODO: this is for the html one
+      //   a.addRule("F", "F[+F][--F]F[-F]F");
+      a.addRule("F", "F[+B][--F][--B]F");
+      a.addRule("B", "B[+B]B[-B]B");
+      //   a.addRule("F", "F[+F]F[-F]F");
 
       // B
       var b = new LSystem(p5, "F", 20.0, 290, 0.5, 5);

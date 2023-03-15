@@ -59,13 +59,16 @@ export class LSystem {
     this.addInstruction("F", () => {
       this.p5.line(0, 0, 0, -this.lineLength);
 
+      // TODO: REFACTOR ALL THE HTML STUFF OUT INTO A SEPARATE THING
       const child = document.createElement(tag);
       child.innerText = tag;
+      child.value = tag;
       child.style = Object.entries({
         ...child.style,
         // fill in rotation to match with rotation of the line
         transform: `rotate(${this.a}deg)`,
         width: `${this.lineLength}px`,
+        height: `${this.lineLength}px`,
         // TODO: need origin point here
         position: "absolute",
         left: `${-(
@@ -85,6 +88,41 @@ export class LSystem {
       this.p5.translate(0, -this.lineLength);
       this.x += 0 * Math.cos(this.a) - -this.lineLength * Math.sin(this.a);
       this.y += -this.lineLength * Math.cos(this.a) + 0 * Math.sin(this.a);
+    });
+    this.addInstruction("B", () => {
+      const distance = this.lineLength * 1.3;
+      const thickness = this.lineLength * 2;
+      this.p5.line(0, 0, 0, -distance);
+
+      // TODO: REFACTOR ALL THE HTML STUFF OUT INTO A SEPARATE THING
+      const child = document.createElement(tag);
+      child.innerText = tag;
+      child.value = tag;
+      child.style = Object.entries({
+        ...child.style,
+        // fill in rotation to match with rotation of the line
+        transform: `rotate(${this.a}deg)`,
+        width: `${thickness}px`,
+        height: `${this.lineLength}px`,
+        // TODO: need origin point here
+        position: "absolute",
+        left: `${-(
+          this.x +
+          0 * Math.cos(this.a) -
+          -distance * Math.sin(this.a)
+        )}px`,
+        bottom: `${-(
+          this.y +
+          -distance * Math.cos(this.a) +
+          0 * Math.sin(this.a)
+        )}px`,
+      })
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(";");
+      document.querySelector("#plant").appendChild(child);
+      this.p5.translate(0, -distance);
+      this.x += 0 * Math.cos(this.a) - -distance * Math.sin(this.a);
+      this.y += -distance * Math.cos(this.a) + 0 * Math.sin(this.a);
     });
     this.addInstruction("+", () => {
       this.p5.rotate(-this.angle);
