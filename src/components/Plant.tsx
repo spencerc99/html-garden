@@ -23,8 +23,8 @@ export function Plant() {
       a.color = p5.color(255, 243, 217);
       //   TODO: this is for the html one
       //   a.addRule("F", "F[+F][--F]F[-F]F");
-      a.addRule("F", "F[+B][--F][--B]F");
-      a.addRule("B", "B[+B]B[-B]B");
+      a.addRule("F", "F[+B][--F]F");
+      a.addRule("B", "B[+F]B[-F]B");
       //   a.addRule("F", "F[+F]F[-F]F");
 
       // B
