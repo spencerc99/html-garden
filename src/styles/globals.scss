@@ -20,21 +20,73 @@ body {
   color: $color-elite-teal;
 }
 
-a {
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 * {
   box-sizing: border-box;
 }
 
-#plant {
+.htmlPlant {
   position: relative;
-  height: 200px;
-  display: flex;
-  left: 50%;
+}
+
+#garden {
+  height: clamp(400px, 80dvh, 1000px);
+  width: 100%;
+}
+
+.plantWrapper {
+  position: absolute;
+}
+
+// blink text infinite
+@keyframes blink {
+  0% {
+    color: #6f705f;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    color: #0e0f06;
+  }
+}
+
+time {
+  animation: blink 2s infinite linear;
+  transition: opacity;
+  color: #0e0f06;
+
+  // https://codepen.io/dan10gc/post/use-the-random-sass-function-to-create-unique-animations
+  // https://www.the215guys.com/learning/nth-child-cicada-principle/
+  &:nth-of-type(n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(2n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(3n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(5n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(7n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(11n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  &:nth-of-type(13n) {
+    animation-delay: #{(random(5) / 2) + 1}s;
+  }
+  overflow: hidden;
+}
+
+hr {
+  // border-color: black;
+  margin: 0;
+  height: 1px;
+}
+
+button {
+  padding: 0;
+  margin: 0;
 }

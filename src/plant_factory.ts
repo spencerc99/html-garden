@@ -1,5 +1,7 @@
 import type p5Type from "p5";
 
+export const IS_DEBUGGING = false;
+
 interface LSystemInit {
   p5: p5Type;
   axiom: string;
@@ -59,6 +61,9 @@ class LSystemBase {
     this.a = 0;
     this.sentence = this.axiom;
 
+    this.addInstruction("M", () => {
+      this.updatePosition();
+    });
     this.addInstruction("+", () => {
       this.p5.rotate(-this.angle);
       this.a += -this.angle;
@@ -80,14 +85,21 @@ class LSystemBase {
     });
   }
 
-  addRule(input: string, output: string, chance: number = 1.0) {
+  updatePosition(distance: number = this.lineLength) {
+    this.p5.translate(0, -distance);
+    this.x += 0 * Math.cos(this.a) - -distance * Math.sin(this.a);
+    this.y += -distance * Math.cos(this.a) + 0 * Math.sin(this.a);
+  }
+  addRule(input: string, output: string, chance: number = 1.0): this {
     this.rules[input] = {
       transform: output,
       chance: chance,
     };
+    return this;
   }
-  addInstruction(char, callback) {
+  addInstruction(char, callback): this {
     this.instructions[char] = callback.bind(this);
+    return this;
   }
   generate() {
     var s = "";
@@ -106,12 +118,13 @@ class LSystemBase {
     this.sentence = s;
     this.lineLength *= this.lengthMod;
   }
-  render() {}
   draw() {
     if (this.timesDrawn >= this.maxIterations) {
       this.p5.noLoop();
       return;
     }
+
+    // TODO: can split up timesDrawn into handling each drawing instruction.
 
     this.p5.stroke(this.color);
     var chars = this.getTokens();
@@ -137,69 +150,114 @@ export class LSystem extends LSystemBase {
   constructor(props: LSystemInit) {
     super(props);
     this.addInstruction("F", () => {
-      this.p5.translate(0, -this.lineLength);
-      this.x += 0 * Math.cos(this.a) - -this.lineLength * Math.sin(this.a);
-      this.y += -this.lineLength * Math.cos(this.a) + 0 * Math.sin(this.a);
+      this.p5.line(0, 0, 0, -this.lineLength);
+      this.updatePosition();
     });
   }
 }
 export class HtmlLSystem extends LSystemBase {
   tag: keyof HTMLElementTagNameMap;
   parentSelector: string;
+  innerValue: string;
+  extraProps: Record<string, string>;
+  elementsDrawn: number;
+  useStrictDimensions: boolean;
+  useStrictWidth: boolean;
+  renderVertically: boolean;
 
   constructor(
-    props: LSystemBase & {
+    props: LSystemInit & {
       tag: keyof HTMLElementTagNameMap;
       parentSelector: string;
+      innerValue?: string;
+      extraProps?: Record<string, string>;
+      useStrictDimensions?: boolean;
+      useStrictWidth?: boolean;
+      renderVertically?: boolean;
     }
   ) {
     super(props);
     this.tag = props.tag;
     this.parentSelector = props.parentSelector;
+    this.innerValue = props.innerValue ?? this.tag;
+    this.extraProps = props.extraProps || {};
+    this.elementsDrawn = 0;
+    this.useStrictDimensions = props.useStrictDimensions ?? false;
+    this.useStrictWidth = props.useStrictWidth ?? false;
+    this.renderVertically = props.renderVertically ?? false;
+    this.a = this.renderVertically ? 270 : this.a;
 
-    this.addInstruction("F", () => {
-      const distance = this.lineLength;
+    // same as F but rotate 90deg.
+    this.addInstruction("G", () => {
+      this.drawElement({ rotation: 270 });
+      this.updatePosition();
+    });
+    // same as F but don't update position
+    this.addInstruction("D", () => {
       this.drawElement();
-
-      // update p5 and state trackers
-      this.p5.translate(0, -distance);
-      this.x += 0 * Math.cos(this.a) - -distance * Math.sin(this.a);
-      this.y += -distance * Math.cos(this.a) + 0 * Math.sin(this.a);
+    });
+    this.addInstruction("F", () => {
+      this.drawElement();
+      this.updatePosition();
     });
     this.addInstruction("B", () => {
       const distance = this.lineLength * 1.3;
       const thickness = this.lineLength * 2;
       this.drawElement({ distance, width: thickness });
-
-      // update p5 and state trackers
-      this.p5.translate(0, -distance);
-      this.x += 0 * Math.cos(this.a) - -distance * Math.sin(this.a);
-      this.y += -distance * Math.cos(this.a) + 0 * Math.sin(this.a);
+      this.updatePosition(distance);
     });
+  }
+
+  override draw() {
+    if (this.timesDrawn >= this.maxIterations) {
+      this.p5.noLoop();
+      return;
+    }
+
+    this.p5.stroke(this.color);
+    var chars = this.getTokens();
+    chars.forEach((c) => {
+      if (this.instructions.hasOwnProperty(c)) {
+        this.instructions[c]();
+      }
+    });
+    this.timesDrawn++;
   }
 
   drawElement({
     width = this.lineLength,
     height = this.lineLength,
     distance = this.lineLength,
+    rotation = this.a,
   }: {
     width?: number;
     height?: number;
     distance?: number;
+    rotation?: number;
   } = {}) {
     const child = document.createElement(this.tag);
-    child.innerText = this.tag;
+    child.innerText = IS_DEBUGGING
+      ? `${this.innerValue}-${this.elementsDrawn}`
+      : this.innerValue;
     if ("value" in child) {
-      child.value = this.tag;
+      child.value = this.innerValue;
+    }
+    for (const [prop, val] of Object.entries(this.extraProps)) {
+      child[prop] = val;
     }
 
     // @ts-ignore
     child.style = Object.entries({
       ...child.style,
       // fill in rotation to match with rotation of the line
-      transform: `rotate(${this.a}deg)`,
-      width: `${width}px`,
-      height: `${height}px`,
+      transform: `rotate(${rotation}deg)`,
+      ...(this.useStrictDimensions
+        ? {
+            width: `${width}px`,
+            height: `${height}px`,
+          }
+        : { maxWidth: `${width}px`, maxHeight: `${height}px` }),
+      ...(this.useStrictWidth ? { width: `${width}px` } : {}),
       // TODO: need origin point here
       position: "absolute",
       left: `${-(
@@ -212,10 +270,20 @@ export class HtmlLSystem extends LSystemBase {
         -distance * Math.cos(this.a) +
         0 * Math.sin(this.a)
       )}px`,
+      ...(IS_DEBUGGING
+        ? {
+            // add background where background is yellow in scaling brightness based on the number of elements drawn. The color should get lighter the greater numElementsDrawn is
+            background: `hsl(60, 100%, ${Math.min(
+              50,
+              this.elementsDrawn * 10
+            )}%)`,
+          }
+        : {}),
     })
       .map(([key, value]) => `${key}: ${value}`)
       .join(";");
     document.querySelector(this.parentSelector).appendChild(child);
+    this.elementsDrawn++;
   }
 }
 

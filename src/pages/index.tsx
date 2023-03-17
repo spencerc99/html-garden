@@ -1,6 +1,10 @@
 import Head from "next/head";
 import { Garden } from "../components/Garden";
-import { HtmlPlantType, HtmlPlantTypeToSpecies } from "../components/HtmlPlant";
+import {
+  GenusName,
+  HtmlPlantType,
+  HtmlPlantTypeToSpecies,
+} from "../components/HtmlPlant";
 import styles from "../styles/Home.module.scss";
 
 const StartDate = new Date("2023-03-15");
@@ -10,7 +14,7 @@ export default function Home() {
   const totalSpecies = 10;
   const seasonName = "spring";
   // TODO: derive this from the current date
-  const currentSpecies = HtmlPlantType.ElementumLinchinus;
+  const currentSpecies = HtmlPlantType.Linchinus;
 
   return (
     <>
@@ -29,8 +33,8 @@ export default function Home() {
           days.
         </p>
         <p>
-          Today, on {new Date().toLocaleDateString()},{" "}
-          {HtmlPlantTypeToSpecies[currentSpecies].name} is seeding.
+          Today, on {new Date().toLocaleDateString()}, {GenusName}{" "}
+          {HtmlPlantTypeToSpecies[currentSpecies].type} is seeding.
         </p>
         <p>
           Visit again on a different day to see how the garden changes between
