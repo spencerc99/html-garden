@@ -125,20 +125,20 @@ export const HtmlPlantTypeToSpecies = {
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
       return new HtmlLSystem({
         p5,
-        axiom: "F",
+        axiom: "G",
         angle: 30,
         lineLength: 12,
         lengthMod: 1,
-        iterations: 3,
+        iterations: 4,
         tag: "hr",
         parentSelector,
         maxIterations,
         innerValue: "",
         useStrictWidth: true,
-        renderVertically: true,
-      }).addRule("F", "F[+F][-F][+F]");
+        // renderVertically: true,
+      }).addRule("G", "G[+G][-G][+G]");
     },
-    frameRate: FrameRate,
+    frameRate: FrameRate * 3,
   },
   [HtmlPlantType.Lexus]: {
     type: HtmlPlantType.Lexus,

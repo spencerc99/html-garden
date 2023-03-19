@@ -15,13 +15,13 @@ export function Garden() {
     <div id="garden">
       {/* TODO: just show label on hover? */}
       <div className="plantWrapper" style={{ bottom: "50%", left: "50%" }}>
-        <HtmlPlant type={HtmlPlantType.Linchinus} idx={0} daysGrown={3} />
+        <HtmlPlant type={HtmlPlantType.Linchinus} idx={0} daysGrown={2} />
         <label>
           {GenusName} {HtmlPlantType.Linchinus}
         </label>
       </div>
       <div className="plantWrapper" style={{ bottom: "20%", left: "33%" }}>
-        <HtmlPlant type={HtmlPlantType.Datum} idx={0} daysGrown={2} />
+        <HtmlPlant type={HtmlPlantType.Datum} idx={0} daysGrown={4} />
         <label>
           {GenusName} {HtmlPlantType.Datum}
         </label>

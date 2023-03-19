@@ -214,7 +214,7 @@ export class HtmlLSystem extends LSystemBase {
 
     // same as F but rotate 90deg.
     this.addInstruction("G", () => {
-      this.drawElement({ rotation: 270 });
+      this.drawElement({ rotation: this.a + 270 });
       this.updatePosition();
     });
     // same as F but don't update position
@@ -250,7 +250,7 @@ export class HtmlLSystem extends LSystemBase {
       //   const [[_key, handler]] = Object.entries(this.instructions)
       //     .sort(([a], [b]) => b.length - a.length)
       //     .filter(([key]) => toProcess.startsWith(key));
-      //   this.drawingStack.push({ key: _key, instruction: handler });
+      //   this.drawingStack.push({ key: _key as any, instruction: handler });
       //   idx += _key.length;
       // }
       chars.forEach((char) => {
