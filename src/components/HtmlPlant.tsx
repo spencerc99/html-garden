@@ -4,7 +4,7 @@ import type p5Type from "p5";
 import dynamic from "next/dynamic";
 
 const Sketch = dynamic(import("react-p5"), { ssr: false });
-const FrameRate = 0.5;
+const FrameRate = 6;
 interface Props {
   type: HtmlPlantType;
   idx: number;
@@ -19,6 +19,7 @@ export enum HtmlPlantType {
   "Datum" = "Datum",
   "Chrono" = "Chrono",
   "Separatus" = "Separatus",
+  "Lexus" = "Lexus",
 }
 
 export interface HtmlPlantInfo {
@@ -40,10 +41,10 @@ export const HtmlPlantTypeToSpecies = {
       new HtmlLSystem({
         p5,
         axiom: "F",
-        angle: 25.7,
-        lineLength: 50,
-        lengthMod: 0.5,
-        iterations: 1,
+        angle: 39,
+        lineLength: 15,
+        lengthMod: 1,
+        iterations: 3,
         tag: "a",
         parentSelector,
         innerValue: "link",
@@ -51,8 +52,8 @@ export const HtmlPlantTypeToSpecies = {
           href: "#",
         },
         maxIterations,
-      }).addRule("F", "G[+F][-F]G"),
-    frameRate: 1.5,
+      }).addRule("F", "G[+F]F[-F]G"),
+    frameRate: 10,
   },
   [HtmlPlantType.Botonus]: {
     type: HtmlPlantType.Botonus,
@@ -71,8 +72,8 @@ export const HtmlPlantTypeToSpecies = {
         maxIterations,
         renderVertically: true,
         useStrictDimensions: true,
-      }).addRule("F", "F------M[----F---F]+++++M[+++F----F]+"),
-    frameRate: FrameRate,
+      }).addRule("F", "F------M[----MF---MF]+++++M[+++MF----F]+"),
+    frameRate: 6,
   },
   [HtmlPlantType.Datum]: {
     type: HtmlPlantType.Datum,
@@ -83,17 +84,17 @@ export const HtmlPlantTypeToSpecies = {
         p5,
         axiom: "F",
         angle: 25.7,
-        lineLength: 75,
-        lengthMod: 0.6,
-        iterations: 3,
+        lineLength: 30,
+        lengthMod: 0.75,
+        iterations: 2,
         tag: "input",
         parentSelector,
         maxIterations,
         useStrictDimensions: true,
       })
-        .addRule("F", "F[+B][--F]F")
-        .addRule("B", "B[+F]B[-F]B"),
-    frameRate: 1,
+        .addRule("F", "DM[+B][--B]F")
+        .addRule("B", "B[+F]B"),
+    frameRate: FrameRate,
   },
   [HtmlPlantType.Chrono]: {
     type: HtmlPlantType.Chrono,
@@ -116,7 +117,7 @@ export const HtmlPlantTypeToSpecies = {
         renderVertically: true,
       }).addRule("F", "F-[F]-[F]-[F]-");
     },
-    frameRate: 2,
+    frameRate: FrameRate / 3,
   },
   [HtmlPlantType.Separatus]: {
     type: HtmlPlantType.Separatus,
@@ -137,7 +138,25 @@ export const HtmlPlantTypeToSpecies = {
         renderVertically: true,
       }).addRule("F", "F[+F][-F][+F]");
     },
-    frameRate: 2,
+    frameRate: FrameRate,
+  },
+  [HtmlPlantType.Lexus]: {
+    type: HtmlPlantType.Lexus,
+    tags: ["code", "kbd", "samp", "var"],
+    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
+      return new HtmlLSystem({
+        p5,
+        axiom: "F",
+        angle: 70,
+        lineLength: 28,
+        lengthMod: 1,
+        iterations: 3,
+        tag: "code",
+        parentSelector,
+        maxIterations,
+      }).addRule("F", "F[+F][-F][+F]");
+    },
+    frameRate: FrameRate * 2,
   },
 } satisfies Record<HtmlPlantType, HtmlPlantInfo>;
 

@@ -12,6 +12,29 @@ interface LSystemInit {
   maxIterations?: number;
 }
 
+type InstructionType = "M" | "+" | "-" | "[" | "]" | "F" | "D" | "G" | "B";
+
+interface InstructionTypeInfo {
+  isDrawing: boolean;
+}
+
+const InstructionTypeToInfo: Record<InstructionType, InstructionTypeInfo> = {
+  M: { isDrawing: false },
+  "+": { isDrawing: false },
+  "-": { isDrawing: false },
+  "[": { isDrawing: false },
+  "]": { isDrawing: false },
+  F: { isDrawing: true },
+  D: { isDrawing: true },
+  G: { isDrawing: true },
+  B: { isDrawing: true },
+};
+
+interface Instruction {
+  key: InstructionType;
+  instruction: () => void;
+}
+
 class LSystemBase {
   p5: p5Type;
   axiom: string;
@@ -20,7 +43,7 @@ class LSystemBase {
   lengthMod: number;
   iterations: number;
   rules: any;
-  instructions: any;
+  instructions: Partial<Record<InstructionType, () => void>>;
   sentence: string;
   color: any;
   texture: any;
@@ -97,7 +120,7 @@ class LSystemBase {
     };
     return this;
   }
-  addInstruction(char, callback): this {
+  addInstruction(char: InstructionType, callback: () => void): this {
     this.instructions[char] = callback.bind(this);
     return this;
   }
@@ -124,14 +147,13 @@ class LSystemBase {
       return;
     }
 
-    // TODO: can split up timesDrawn into handling each drawing instruction.
-
     this.p5.stroke(this.color);
     var chars = this.getTokens();
     chars.forEach((c) => {
-      if (this.instructions.hasOwnProperty(c)) {
-        this.instructions[c]();
+      if (!this.instructions.hasOwnProperty(c)) {
+        console.warn(`${c} instruction not handled`);
       }
+      this.instructions[c]?.();
     });
     this.timesDrawn++;
   }
@@ -155,6 +177,7 @@ export class LSystem extends LSystemBase {
     });
   }
 }
+
 export class HtmlLSystem extends LSystemBase {
   tag: keyof HTMLElementTagNameMap;
   parentSelector: string;
@@ -164,6 +187,7 @@ export class HtmlLSystem extends LSystemBase {
   useStrictDimensions: boolean;
   useStrictWidth: boolean;
   renderVertically: boolean;
+  drawingStack: Array<Instruction>;
 
   constructor(
     props: LSystemInit & {
@@ -186,6 +210,7 @@ export class HtmlLSystem extends LSystemBase {
     this.useStrictWidth = props.useStrictWidth ?? false;
     this.renderVertically = props.renderVertically ?? false;
     this.a = this.renderVertically ? 270 : this.a;
+    this.drawingStack = [];
 
     // same as F but rotate 90deg.
     this.addInstruction("G", () => {
@@ -214,14 +239,40 @@ export class HtmlLSystem extends LSystemBase {
       return;
     }
 
-    this.p5.stroke(this.color);
-    var chars = this.getTokens();
-    chars.forEach((c) => {
-      if (this.instructions.hasOwnProperty(c)) {
-        this.instructions[c]();
-      }
-    });
-    this.timesDrawn++;
+    if (this.drawingStack.length === 0) {
+      // Add all the iterations of current tokens to the stack
+      var chars = this.getTokens();
+      // TODO: would be nice to eagerly look at "startswith" to handle multi-character instructions
+      // let idx = 0;
+      // while (idx < chars.length) {
+      //   const toProcess = chars.slice(idx).join("");
+      //   // sort by longest first, check matches against toProcess
+      //   const [[_key, handler]] = Object.entries(this.instructions)
+      //     .sort(([a], [b]) => b.length - a.length)
+      //     .filter(([key]) => toProcess.startsWith(key));
+      //   this.drawingStack.push({ key: _key, instruction: handler });
+      //   idx += _key.length;
+      // }
+      chars.forEach((char) => {
+        if (this.instructions.hasOwnProperty(char)) {
+          this.drawingStack.push({
+            key: char as any,
+            instruction: this.instructions[char],
+          });
+        }
+      });
+    }
+
+    // TODO: handle non-drawing instructions to execute immediately.
+    let hasDrawn = false;
+    while (this.drawingStack.length > 0 && !hasDrawn) {
+      const { key, instruction } = this.drawingStack.shift();
+      instruction();
+      hasDrawn = InstructionTypeToInfo[key].isDrawing;
+    }
+    if (this.drawingStack.length === 0) {
+      this.timesDrawn++;
+    }
   }
 
   drawElement({
