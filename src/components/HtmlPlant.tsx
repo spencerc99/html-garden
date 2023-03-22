@@ -24,7 +24,6 @@ export enum HtmlPlantType {
 
 export interface HtmlPlantInfo {
   type: HtmlPlantType;
-  tags: Array<keyof HTMLElementTagNameMap>;
   getLSystem: (
     p5: p5Type,
     parentSelector: string,
@@ -36,7 +35,6 @@ export interface HtmlPlantInfo {
 export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Linchinus]: {
     type: HtmlPlantType.Linchinus,
-    tags: ["a"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
       new HtmlLSystem({
         p5,
@@ -45,19 +43,22 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 15,
         lengthMod: 1,
         iterations: 3,
-        tag: "a",
         parentSelector,
-        innerValue: "link",
-        extraProps: {
-          href: "#",
-        },
+        tagInfos: [
+          {
+            tag: "a",
+            innerValue: "link",
+            extraProps: {
+              href: "#",
+            },
+          },
+        ],
         maxIterations,
       }).addRule("F", "G[+F]F[-F]G"),
     frameRate: 10,
   },
   [HtmlPlantType.Botonus]: {
     type: HtmlPlantType.Botonus,
-    tags: ["button"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
       new HtmlLSystem({
         p5,
@@ -66,9 +67,8 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 25,
         lengthMod: 1,
         iterations: 2,
-        tag: "button",
+        tagInfos: [{ tag: "button", innerValue: "btn" }],
         parentSelector,
-        innerValue: "btn",
         maxIterations,
         renderVertically: true,
         useStrictDimensions: true,
@@ -77,8 +77,6 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Datum]: {
     type: HtmlPlantType.Datum,
-    // TODO: supoprt multiple tags and randomly pick between them?
-    tags: ["input"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
       new HtmlLSystem({
         p5,
@@ -87,7 +85,7 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 30,
         lengthMod: 0.85,
         iterations: 3,
-        tag: "input",
+        tagInfos: [{ tag: "input", extraProps: { value: "input" } }],
         parentSelector,
         maxIterations,
         useStrictDimensions: true,
@@ -98,7 +96,6 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Chrono]: {
     type: HtmlPlantType.Chrono,
-    tags: ["time"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
       const time = new Date().toLocaleTimeString().split(" ")[0];
       return new HtmlLSystem({
@@ -108,12 +105,12 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 30,
         lengthMod: 1,
         iterations: 2,
-        tag: "time",
+        tagInfos: [
+          { tag: "time", innerValue: time, extraProps: { datetime: time } },
+        ],
         parentSelector,
         maxIterations,
         useStrictWidth: true,
-        innerValue: time,
-        extraProps: { datetime: time },
         renderVertically: true,
       }).addRule("F", "F-[F]-[F]-[F]-");
     },
@@ -121,7 +118,6 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Separatus]: {
     type: HtmlPlantType.Separatus,
-    tags: ["hr"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
       return new HtmlLSystem({
         p5,
@@ -130,19 +126,16 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 12,
         lengthMod: 1,
         iterations: 3,
-        tag: "hr",
+        tagInfos: [{ tag: "hr", innerValue: "" }],
         parentSelector,
         maxIterations,
-        innerValue: "",
         useStrictWidth: true,
-        // renderVertically: true,
       }).addRule("G", "G[+G][-G]M[+G]");
     },
     frameRate: FrameRate * 3,
   },
   [HtmlPlantType.Lexus]: {
     type: HtmlPlantType.Lexus,
-    tags: ["code", "kbd", "samp", "var"],
     getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
       return new HtmlLSystem({
         p5,
@@ -151,10 +144,15 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 28,
         lengthMod: 1,
         iterations: 3,
-        tag: "code",
+        tagInfos: [
+          { tag: "code" },
+          { tag: "kbd", innerValue: "Cmd" },
+          { tag: "samp" },
+          { tag: "var" },
+        ],
         parentSelector,
         maxIterations,
-      }).addRule("F", "F[+F][-F][+F]");
+      }).addRule("F", "F[+F][-F]+[+F]");
     },
     frameRate: FrameRate * 2,
   },
@@ -173,7 +171,7 @@ export function HtmlPlant({ type, idx, daysGrown }: Props) {
      * Branching Systems
      **/
 
-    const newSystem = info.getLSystem(p5, `.${info.tags[0]}-${idx}`, daysGrown);
+    const newSystem = info.getLSystem(p5, `.${type}-${idx}`, daysGrown);
     system.current = newSystem;
     newSystem.run();
   };
@@ -190,7 +188,7 @@ export function HtmlPlant({ type, idx, daysGrown }: Props) {
   };
 
   return (
-    <div className={`${info.tags[0]}-${idx} htmlPlant`}>
+    <div className={`${type}-${idx} htmlPlant`}>
       <Sketch setup={setup} draw={draw} />
     </div>
   );

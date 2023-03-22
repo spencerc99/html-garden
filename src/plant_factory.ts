@@ -2,6 +2,11 @@ import type p5Type from "p5";
 
 export const IS_DEBUGGING = false;
 
+// return a random element from the given array
+function randomElement<T = any>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 interface LSystemInit {
   p5: p5Type;
   axiom: string;
@@ -178,11 +183,15 @@ export class LSystem extends LSystemBase {
   }
 }
 
-export class HtmlLSystem extends LSystemBase {
+interface ElementTagInfo {
   tag: keyof HTMLElementTagNameMap;
+  innerValue?: string;
+  extraProps?: Record<string, string>;
+}
+
+export class HtmlLSystem extends LSystemBase {
+  tagInfos: ElementTagInfo[];
   parentSelector: string;
-  innerValue: string;
-  extraProps: Record<string, string>;
   elementsDrawn: number;
   useStrictDimensions: boolean;
   useStrictWidth: boolean;
@@ -191,20 +200,16 @@ export class HtmlLSystem extends LSystemBase {
 
   constructor(
     props: LSystemInit & {
-      tag: keyof HTMLElementTagNameMap;
+      tagInfos: ElementTagInfo[];
       parentSelector: string;
-      innerValue?: string;
-      extraProps?: Record<string, string>;
       useStrictDimensions?: boolean;
       useStrictWidth?: boolean;
       renderVertically?: boolean;
     }
   ) {
     super(props);
-    this.tag = props.tag;
+    this.tagInfos = props.tagInfos;
     this.parentSelector = props.parentSelector;
-    this.innerValue = props.innerValue ?? this.tag;
-    this.extraProps = props.extraProps || {};
     this.elementsDrawn = 0;
     this.useStrictDimensions = props.useStrictDimensions ?? false;
     this.useStrictWidth = props.useStrictWidth ?? false;
@@ -286,14 +291,17 @@ export class HtmlLSystem extends LSystemBase {
     distance?: number;
     rotation?: number;
   } = {}) {
-    const child = document.createElement(this.tag);
+    const {
+      tag,
+      innerValue = tag,
+      extraProps = {},
+    } = randomElement(this.tagInfos);
+    const child = document.createElement(tag);
     child.innerText = IS_DEBUGGING
-      ? `${this.innerValue}-${this.elementsDrawn}`
-      : this.innerValue;
-    if ("value" in child) {
-      child.value = this.innerValue;
-    }
-    for (const [prop, val] of Object.entries(this.extraProps)) {
+      ? `${innerValue}-${this.elementsDrawn}`
+      : innerValue;
+
+    for (const [prop, val] of Object.entries(extraProps)) {
       child[prop] = val;
     }
 
