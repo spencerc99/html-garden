@@ -3,8 +3,22 @@ import type p5Type from "p5";
 export const IS_DEBUGGING = false;
 
 // return a random element from the given array
-function randomElement<T = any>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+function randomElement<T = any>(arr: T[], weights?: number[]): T {
+  if (!weights) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  let totalWeight = 0;
+  for (let i = 0; i < weights.length; i++) {
+    totalWeight += weights[i];
+  }
+  let random = Math.random() * totalWeight;
+  for (let i = 0; i < arr.length; i++) {
+    if (random < weights[i]) {
+      return arr[i];
+    }
+    random -= weights[i];
+  }
 }
 
 interface LSystemInit {
@@ -126,6 +140,7 @@ class LSystemBase {
     return this;
   }
   addInstruction(char: InstructionType, callback: () => void): this {
+    // TODO: this should warn if the instruction is already defined / handle overlapping instructions
     this.instructions[char] = callback.bind(this);
     return this;
   }
@@ -247,28 +262,18 @@ export class HtmlLSystem extends LSystemBase {
     if (this.drawingStack.length === 0) {
       // Add all the iterations of current tokens to the stack
       var chars = this.getTokens();
-      // TODO: would be nice to eagerly look at "startswith" to handle multi-character instructions
-      // let idx = 0;
-      // while (idx < chars.length) {
-      //   const toProcess = chars.slice(idx).join("");
-      //   // sort by longest first, check matches against toProcess
-      //   const [[_key, handler]] = Object.entries(this.instructions)
-      //     .sort(([a], [b]) => b.length - a.length)
-      //     .filter(([key]) => toProcess.startsWith(key));
-      //   this.drawingStack.push({ key: _key as any, instruction: handler });
-      //   idx += _key.length;
-      // }
-      chars.forEach((char) => {
-        if (this.instructions.hasOwnProperty(char)) {
-          this.drawingStack.push({
-            key: char as any,
-            instruction: this.instructions[char],
-          });
-        }
-      });
+      let idx = 0;
+      while (idx < chars.length) {
+        const toProcess = chars.slice(idx).join("");
+        // sort by longest first, check matches against toProcess
+        const [[_key, handler]] = Object.entries(this.instructions)
+          .sort(([a], [b]) => b.length - a.length)
+          .filter(([key]) => toProcess.startsWith(key));
+        this.drawingStack.push({ key: _key as any, instruction: handler });
+        idx += _key.length;
+      }
     }
 
-    // TODO: handle non-drawing instructions to execute immediately.
     let hasDrawn = false;
     while (this.drawingStack.length > 0 && !hasDrawn) {
       const { key, instruction } = this.drawingStack.shift();
@@ -317,7 +322,6 @@ export class HtmlLSystem extends LSystemBase {
           }
         : { maxWidth: `${width}px`, maxHeight: `${height}px` }),
       ...(this.useStrictWidth ? { width: `${width}px` } : {}),
-      // TODO: need origin point here
       position: "absolute",
       left: `${-(
         this.x +

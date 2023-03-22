@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { GenusName, HtmlPlant, HtmlPlantType } from "./HtmlPlant";
+import { HtmlPlant } from "./HtmlPlant";
+import seedrandom from "seedrandom";
+import { HtmlPlantType, GenusName } from "../common/plants";
 
 export function Garden() {
   useEffect(() => {}, []);
@@ -13,74 +15,57 @@ export function Garden() {
 
   return (
     <div id="garden">
-      <PlantWrapper
-        bottom={"50%"}
-        left={"50%"}
-        plantType={HtmlPlantType.Linchinus}
-        daysGrown={2}
-      />
-      <PlantWrapper
-        bottom={"20%"}
-        left={"33%"}
-        plantType={HtmlPlantType.Datum}
-        daysGrown={4}
-      />
-      <PlantWrapper
-        bottom={"40%"}
-        left={"77%"}
-        plantType={HtmlPlantType.Botonus}
-        daysGrown={3}
-      />
-      <PlantWrapper
-        bottom={"22%"}
-        left={"63%"}
-        plantType={HtmlPlantType.Chrono}
-        daysGrown={2}
-      />
-      <PlantWrapper
-        bottom={"53%"}
-        left={"14%"}
-        plantType={HtmlPlantType.Separatus}
-        daysGrown={3}
-        rotationDegs={13}
-      />
-      <PlantWrapper
-        bottom={"22%"}
-        left={"13%"}
-        plantType={HtmlPlantType.Lexus}
-        daysGrown={2}
-      />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Linchinus} daysGrown={2} />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Datum} daysGrown={4} />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Botonus} daysGrown={3} />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Chrono} daysGrown={2} />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Separatus} daysGrown={3} />
+      <PlantWrapper idx={0} plantType={HtmlPlantType.Lexus} daysGrown={2} />
     </div>
   );
 }
 
 function PlantWrapper({
-  bottom,
-  left,
   plantType,
   daysGrown,
-  rotationDegs,
+  idx = 0,
 }: {
-  bottom: string;
-  left: string;
   plantType: HtmlPlantType;
   daysGrown: number;
-  rotationDegs?: number;
+  idx: number;
 }) {
   /* TODO: just show label on hover? */
+  const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
+  const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
+  const bottom = useMemo(() => `${randomGenerator() * 80}%`, [randomGenerator]);
+  const left = useMemo(
+    () => `${randomGenerator() * 80 + 10}%`,
+    [randomGenerator]
+  );
+  const randomRotation = useMemo(
+    () => randomGenerator() * 60 - 30,
+    [randomGenerator]
+  );
+  const randomScale = useMemo(
+    () => randomGenerator() * 0.4 + 0.3,
+    [randomGenerator]
+  );
+
+  const transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
+
   return (
     <div
       className="plantWrapper"
       style={{
         bottom,
         left,
-        transform: rotationDegs ? `rotate(${rotationDegs}deg)` : "",
+        transform,
       }}
     >
-      <HtmlPlant type={plantType} idx={0} daysGrown={daysGrown} />
-      {/* <label>
+      <HtmlPlant type={plantType} idx={idx} daysGrown={daysGrown} />
+      <label>
         {GenusName} {plantType}
-      </label> */}
+      </label>
     </div>
   );
 }

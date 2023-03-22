@@ -1,10 +1,11 @@
 import Head from "next/head";
-import { Garden } from "../components/Garden";
 import {
   GenusName,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
-} from "../components/HtmlPlant";
+} from "../common/plants";
+import { Garden } from "../components/Garden";
+
 import styles from "../styles/Home.module.scss";
 
 const StartDate = new Date("2023-03-15");
