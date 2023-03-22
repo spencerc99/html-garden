@@ -1,6 +1,8 @@
 import Head from "next/head";
 import {
+  currentSeason,
   GenusName,
+  GenusNamePlural,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
@@ -10,12 +12,21 @@ import styles from "../styles/Home.module.scss";
 
 const StartDate = new Date("2023-03-15");
 
+function joinWithAnd(arr: string[]) {
+  if (arr.length === 1) {
+    return arr[0];
+  }
+  return `${arr.slice(0, -1).join(", ")} and ${arr.slice(-1)}`;
+}
+
 export default function Home() {
-  const numSpeciesBlooming = 4;
-  const totalSpecies = 10;
-  const seasonName = "spring";
+  const totalSpecies = Object.keys(HtmlPlantType).length;
+  const seasonName = currentSeason();
   // TODO: derive this from the current date
-  const currentSpecies = HtmlPlantType.Linchinus;
+  const currentSpecies = Object.values(HtmlPlantTypeToSpecies)
+    .filter((s) => s.activePlants().length)
+    .map((s) => s.type);
+  const numSpeciesBlooming = currentSpecies.length;
 
   return (
     <>
@@ -26,26 +37,28 @@ export default function Home() {
       <hgroup>
         <h1>html garden</h1>
         <p>
-          there are {numSpeciesBlooming}/{totalSpecies} species blooming
-          currently. we are in {seasonName}. The garden has been growing for{" "}
+          we are in {seasonName}. {numSpeciesBlooming}/{totalSpecies} species
+          are blooming. the garden has been growing for{" "}
           {Math.floor(
             (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
           )}{" "}
           days.
         </p>
         <p>
-          Today, on {new Date().toLocaleDateString()}, {GenusName}{" "}
-          {HtmlPlantTypeToSpecies[currentSpecies].type} is seeding.
-        </p>
-        <p>
-          Visit again on a different day to see how the garden changes between
-          seasons.
+          Today, on {new Date().toLocaleDateString()}, {GenusNamePlural}{" "}
+          {joinWithAnd(
+            currentSpecies.map((c) => HtmlPlantTypeToSpecies[c].type)
+          )}{" "}
+          {currentSpecies.length > 1 ? "are" : "is"} seeding.
         </p>
       </hgroup>
       <main>
         <Garden />
       </main>
-      <footer>planted by spencer chang</footer>
+      <footer>
+        🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
+        <p>🎐 come visit again soon</p>
+      </footer>
     </>
   );
 }

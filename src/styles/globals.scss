@@ -24,6 +24,23 @@ body {
   box-sizing: border-box;
 }
 
+main {
+  height: 90dvh;
+}
+
+hgroup,
+footer {
+  z-index: 10;
+  position: absolute;
+  background: rgba($color-fiddle-leaf-fig, 0.8);
+  backdrop-filter: blur(2px);
+  text-shadow: 0 0 5px rgba($color-darkest-forest, 0.4);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .htmlPlant {
   position: relative;
 }
@@ -35,14 +52,20 @@ body {
 
 .plantWrapper {
   position: absolute;
+
   label {
-    visibility: hidden;
+    position: fixed;
+    opacity: 0;
     z-index: 10;
+    background: rgba($color-fiddle-leaf-fig, 0.8);
+    backdrop-filter: blur(1px);
+    transition: opacity 0.2s ease-in-out;
   }
 
   &:hover {
+    cursor: help;
     label {
-      visibility: visible;
+      opacity: 1;
       font-size: inherit;
     }
   }

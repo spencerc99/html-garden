@@ -1,28 +1,41 @@
 import { useEffect, useMemo, useState } from "react";
 import { HtmlPlant } from "./HtmlPlant";
 import seedrandom from "seedrandom";
-import { HtmlPlantType, GenusName } from "../common/plants";
+import {
+  HtmlPlantType,
+  GenusName,
+  HtmlPlantTypeToSpecies,
+} from "../common/plants";
 
 export function Garden() {
   useEffect(() => {}, []);
 
-  // TODO: add max growth (ideally exponentially harder)
   // TODO: add threshold for each to "sprout" new plant
   // TODO: figure out seasons for each, some modulo based on the date or intervals where it's in season? or maybe like moon phases where it grows to a peak and then shrinks?
+  // contribute/cultivate your own plant?
+  // - tamogotchi vibes lol
+  // - pick from one of the species and you have to come back to water it.
+  // or can you just adopt one (fake this by choosing a random one)
+  // maybe by visiting the site many times, you earn the right to plant one.
 
   // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering?
   // TODO: some progress or indicator of seeds of other ones that aren't growing right now?
+  const plants = useMemo(() => {
+    return Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
+      species
+        .activePlants()
+        .map((daysGrown, idx) => (
+          <PlantWrapper
+            key={`${species.type}-${idx}`}
+            idx={idx}
+            plantType={species.type}
+            daysGrown={daysGrown}
+          />
+        ))
+    );
+  }, []);
 
-  return (
-    <div id="garden">
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Linchinus} daysGrown={2} />
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Datum} daysGrown={4} />
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Botonus} daysGrown={3} />
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Chrono} daysGrown={2} />
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Separatus} daysGrown={3} />
-      <PlantWrapper idx={0} plantType={HtmlPlantType.Lexus} daysGrown={2} />
-    </div>
-  );
+  return <div id="garden">{plants}</div>;
 }
 
 function PlantWrapper({
@@ -47,7 +60,7 @@ function PlantWrapper({
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => randomGenerator() * 0.4 + 0.3,
+    () => Math.floor(randomGenerator() * 6) * 0.1 + 0.3,
     [randomGenerator]
   );
 

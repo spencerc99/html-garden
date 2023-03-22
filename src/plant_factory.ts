@@ -212,6 +212,7 @@ export class HtmlLSystem extends LSystemBase {
   useStrictWidth: boolean;
   renderVertically: boolean;
   drawingStack: Array<Instruction>;
+  maxElements: number;
 
   constructor(
     props: LSystemInit & {
@@ -223,6 +224,13 @@ export class HtmlLSystem extends LSystemBase {
     }
   ) {
     super(props);
+
+    const daysGrown = props.maxIterations;
+    // maxIteratiosn is log2(daysGrown)
+    const maxIterations = Math.max(Math.floor(Math.log(daysGrown)), 1);
+    this.maxIterations = maxIterations;
+    this.maxElements = Math.pow(3, daysGrown + 1);
+
     this.tagInfos = props.tagInfos;
     this.parentSelector = props.parentSelector;
     this.elementsDrawn = 0;
@@ -254,7 +262,10 @@ export class HtmlLSystem extends LSystemBase {
   }
 
   override draw() {
-    if (this.timesDrawn >= this.maxIterations) {
+    if (
+      this.timesDrawn >= this.maxIterations ||
+      this.elementsDrawn >= this.maxElements
+    ) {
       this.p5.noLoop();
       return;
     }
