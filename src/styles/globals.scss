@@ -20,8 +20,8 @@ body {
   color: $color-elite-teal;
   position: relative;
   overflow: hidden;
-  width: 100dvw;
-  height: 100dvh;
+  width: 100vw;
+  height: 100vh;
 
   // TODO: add some textures in the background to simulate garden-like surface.
   &::after {
@@ -43,7 +43,7 @@ body {
 }
 
 main {
-  height: 90dvh;
+  height: 90vh;
 }
 
 #garden {
@@ -61,6 +61,12 @@ footer {
 
   p:last-child {
     margin-bottom: 0;
+  }
+}
+
+footer {
+  p {
+    margin: 0.25em 0;
   }
 }
 
