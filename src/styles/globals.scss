@@ -18,6 +18,10 @@ body {
   background: $color-fiddle-leaf-fig;
   padding: 2em 4em;
   color: $color-elite-teal;
+  position: relative;
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 * {
@@ -28,12 +32,18 @@ main {
   height: 90dvh;
 }
 
+#garden {
+  // TODO: set a max height and width and make relative.
+  // width: 1400px;
+  // height: 600px;
+}
+
 hgroup,
 footer {
   z-index: 10;
   position: absolute;
-  background: rgba($color-fiddle-leaf-fig, 0.8);
-  backdrop-filter: blur(2px);
+  background: rgba($color-fiddle-leaf-fig, 0.5);
+  backdrop-filter: blur(2.2px);
   text-shadow: 0 0 5px rgba($color-darkest-forest, 0.4);
 
   p:last-child {
@@ -43,11 +53,6 @@ footer {
 
 .htmlPlant {
   position: relative;
-}
-
-#garden {
-  height: clamp(400px, 80dvh, 1000px);
-  width: 100%;
 }
 
 .plantWrapper {
