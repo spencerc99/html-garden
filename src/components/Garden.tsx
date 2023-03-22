@@ -13,45 +13,74 @@ export function Garden() {
 
   return (
     <div id="garden">
-      {/* TODO: just show label on hover? */}
-      <div className="plantWrapper" style={{ bottom: "50%", left: "50%" }}>
-        <HtmlPlant type={HtmlPlantType.Linchinus} idx={0} daysGrown={2} />
-        <label>
-          {GenusName} {HtmlPlantType.Linchinus}
-        </label>
-      </div>
-      <div className="plantWrapper" style={{ bottom: "20%", left: "33%" }}>
-        <HtmlPlant type={HtmlPlantType.Datum} idx={0} daysGrown={4} />
-        <label>
-          {GenusName} {HtmlPlantType.Datum}
-        </label>
-      </div>
-      <div className="plantWrapper" style={{ bottom: "40%", left: "77%" }}>
-        <HtmlPlant type={HtmlPlantType.Botonus} idx={0} daysGrown={3} />
-        <label>
-          {GenusName} {HtmlPlantType.Botonus}
-        </label>
-      </div>
-      <div className="plantWrapper" style={{ bottom: "22%", left: "63%" }}>
-        <HtmlPlant type={HtmlPlantType.Chrono} idx={0} daysGrown={1} />
-        <label>
-          {GenusName} {HtmlPlantType.Chrono}
-        </label>
-      </div>
-      <div className="plantWrapper" style={{ bottom: "63%", left: "10%" }}>
-        <HtmlPlant type={HtmlPlantType.Separatus} idx={0} daysGrown={3} />
-        <label>
-          {GenusName} {HtmlPlantType.Separatus}
-        </label>
-      </div>
-      <div className="plantWrapper" style={{ bottom: "22%", left: "13%" }}>
-        <HtmlPlant type={HtmlPlantType.Lexus} idx={0} daysGrown={2} />
-        <label>
-          {GenusName} {HtmlPlantType.Lexus}
-        </label>
-      </div>
+      <PlantWrapper
+        bottom={"50%"}
+        left={"50%"}
+        plantType={HtmlPlantType.Linchinus}
+        daysGrown={2}
+      />
+      <PlantWrapper
+        bottom={"20%"}
+        left={"33%"}
+        plantType={HtmlPlantType.Datum}
+        daysGrown={4}
+      />
+      <PlantWrapper
+        bottom={"40%"}
+        left={"77%"}
+        plantType={HtmlPlantType.Botonus}
+        daysGrown={3}
+      />
+      <PlantWrapper
+        bottom={"22%"}
+        left={"63%"}
+        plantType={HtmlPlantType.Chrono}
+        daysGrown={2}
+      />
+      <PlantWrapper
+        bottom={"53%"}
+        left={"14%"}
+        plantType={HtmlPlantType.Separatus}
+        daysGrown={3}
+        rotationDegs={13}
+      />
+      <PlantWrapper
+        bottom={"22%"}
+        left={"13%"}
+        plantType={HtmlPlantType.Lexus}
+        daysGrown={2}
+      />
     </div>
   );
 }
 
-function PlantWrapper() {}
+function PlantWrapper({
+  bottom,
+  left,
+  plantType,
+  daysGrown,
+  rotationDegs,
+}: {
+  bottom: string;
+  left: string;
+  plantType: HtmlPlantType;
+  daysGrown: number;
+  rotationDegs?: number;
+}) {
+  /* TODO: just show label on hover? */
+  return (
+    <div
+      className="plantWrapper"
+      style={{
+        bottom,
+        left,
+        transform: rotationDegs ? `rotate(${rotationDegs}deg)` : "",
+      }}
+    >
+      <HtmlPlant type={plantType} idx={0} daysGrown={daysGrown} />
+      {/* <label>
+        {GenusName} {plantType}
+      </label> */}
+    </div>
+  );
+}

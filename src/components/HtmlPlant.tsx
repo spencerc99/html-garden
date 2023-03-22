@@ -85,8 +85,8 @@ export const HtmlPlantTypeToSpecies = {
         axiom: "F",
         angle: 25.7,
         lineLength: 30,
-        lengthMod: 0.75,
-        iterations: 2,
+        lengthMod: 0.85,
+        iterations: 3,
         tag: "input",
         parentSelector,
         maxIterations,
@@ -129,14 +129,14 @@ export const HtmlPlantTypeToSpecies = {
         angle: 30,
         lineLength: 12,
         lengthMod: 1,
-        iterations: 4,
+        iterations: 3,
         tag: "hr",
         parentSelector,
         maxIterations,
         innerValue: "",
         useStrictWidth: true,
         // renderVertically: true,
-      }).addRule("G", "G[+G][-G][+G]");
+      }).addRule("G", "G[+G][-G]M[+G]");
     },
     frameRate: FrameRate * 3,
   },
@@ -163,6 +163,7 @@ export const HtmlPlantTypeToSpecies = {
 export function HtmlPlant({ type, idx, daysGrown }: Props) {
   const info = useMemo(() => HtmlPlantTypeToSpecies[type], [type]);
   const system = useRef(null);
+  // TODO: do random scales and rotations based on the range of the plant
 
   const setup = (p5: p5Type) => {
     p5.noCanvas();
