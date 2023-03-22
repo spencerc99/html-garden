@@ -47,7 +47,6 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
-  /* TODO: just show label on hover? */
   const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
   // TODO: percentage is not great for diff screen sizes because they _look different_. Probably should just use a max width and height and then use pixels, but use overflow:hidden to hide the overflow.

@@ -22,6 +22,20 @@ body {
   overflow: hidden;
   width: 100dvw;
   height: 100dvh;
+
+  // TODO: add some textures in the background to simulate garden-like surface.
+  &::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("/forest-soil.png");
+    opacity: 0.2;
+    background-repeat: repeat;
+    z-index: -1;
+  }
 }
 
 * {
@@ -42,7 +56,6 @@ hgroup,
 footer {
   z-index: 10;
   position: absolute;
-  background: rgba($color-fiddle-leaf-fig, 0.5);
   backdrop-filter: blur(2.2px);
   text-shadow: 0 0 5px rgba($color-darkest-forest, 0.4);
 

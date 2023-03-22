@@ -22,7 +22,6 @@ function joinWithAnd(arr: string[]) {
 export default function Home() {
   const totalSpecies = Object.keys(HtmlPlantType).length;
   const seasonName = currentSeason();
-  // TODO: derive this from the current date
   const currentSpecies = Object.values(HtmlPlantTypeToSpecies)
     .filter((s) => s.activePlants().length)
     .map((s) => s.type);
