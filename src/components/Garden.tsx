@@ -73,7 +73,7 @@ function PlantWrapper({
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => Math.floor(randomGenerator() * 6) * 0.1 + 0.3,
+    () => Math.floor(randomGenerator() * 7) * 0.1 + 0.3,
     [randomGenerator]
   );
 
