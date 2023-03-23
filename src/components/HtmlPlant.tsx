@@ -22,7 +22,6 @@ export function HtmlPlant({ type, idx, daysGrown, style = {} }: Props) {
   const info = useMemo(() => HtmlPlantTypeToSpecies[type], [type]);
   const system = useRef(null);
   const setup = (p5: p5Type) => {
-    p5.noCanvas();
     p5.angleMode(p5.DEGREES);
     p5.frameRate(IS_DEBUGGING ? 30 : info.frameRate ?? FrameRate);
     /**
@@ -32,6 +31,7 @@ export function HtmlPlant({ type, idx, daysGrown, style = {} }: Props) {
     const newSystem = info.getLSystem(p5, `.${plantId}`, daysGrown);
     system.current = newSystem;
     newSystem.run();
+    p5.noCanvas();
   };
 
   // The sketch draw method

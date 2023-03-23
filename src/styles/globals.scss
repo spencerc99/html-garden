@@ -16,17 +16,15 @@ body {
 
 body {
   background: $color-fiddle-leaf-fig;
-  padding: 2em 4em;
   color: $color-elite-teal;
+  height: max(100%, 100dvh);
+  width: max(1400px, 100dvw);
   position: relative;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+  overflow: auto;
 
-  // TODO: add some textures in the background to simulate garden-like surface.
   &::after {
     content: "";
-    height: 100%;
+    height: max(100%, 100dvh);
     width: 100%;
     position: absolute;
     top: 0;
@@ -42,22 +40,42 @@ body {
   box-sizing: border-box;
 }
 
-main {
-  height: 90vh;
+#garden {
+  position: relative;
+  // NOTE: keep this in sync w PlantWrapper for random generation
+  width: 1400px;
+  height: 600px;
+  // border: 6px solid #293b1a;
+  // border-radius: 8px;
+  border-bottom: 6px solid #293b1a;
+  margin: 2em;
+  &::after {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    content: "garden ends here";
+    font-style: italic;
+  }
 }
 
-#garden {
-  // TODO: set a max height and width and make relative.
-  // width: 1400px;
-  // height: 600px;
+main {
+  overflow: hidden;
+}
+
+hgroup {
+  position: absolute;
+  margin-top: 2em;
+  top: 0;
+  width: calc(min(100%, 100vw - 4em, 750px));
 }
 
 hgroup,
 footer {
   z-index: 10;
-  position: absolute;
-  backdrop-filter: blur(2.2px);
+  backdrop-filter: blur(4.2px);
   text-shadow: 0 0 5px rgba($color-darkest-forest, 0.4);
+  margin-left: 2em;
+  margin-right: 2em;
 
   p:last-child {
     margin-bottom: 0;
@@ -65,6 +83,8 @@ footer {
 }
 
 footer {
+  position: fixed;
+  bottom: 4%;
   p {
     margin: 0.25em 0;
   }

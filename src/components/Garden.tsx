@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { HtmlPlant } from "./HtmlPlant";
 import seedrandom from "seedrandom";
 import {
@@ -8,7 +8,11 @@ import {
 } from "../common/plants";
 
 export function Garden() {
-  useEffect(() => {}, []);
+  const ref = useRef<HTMLDivElement>();
+  useEffect(() => {
+    const headerHeight = document.querySelector("hgroup").clientHeight;
+    ref.current.style.marginTop = `${headerHeight + 20 + 32}px`;
+  }, []);
 
   // TODO: add threshold for each to "sprout" new plant
   // TODO: figure out seasons for each, some modulo based on the date or intervals where it's in season? or maybe like moon phases where it grows to a peak and then shrinks?
@@ -35,9 +39,15 @@ export function Garden() {
     );
   }, []);
 
-  return <div id="garden">{plants}</div>;
+  return (
+    <div id="garden" ref={ref}>
+      {plants}
+    </div>
+  );
 }
 
+const GardenWidth = 1400;
+const GardenHeight = 600;
 function PlantWrapper({
   plantType,
   daysGrown,
@@ -50,9 +60,12 @@ function PlantWrapper({
   const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
   // TODO: percentage is not great for diff screen sizes because they _look different_. Probably should just use a max width and height and then use pixels, but use overflow:hidden to hide the overflow.
-  const bottom = useMemo(() => `${randomGenerator() * 80}%`, [randomGenerator]);
+  const bottom = useMemo(
+    () => `${randomGenerator() * GardenHeight}px`,
+    [randomGenerator]
+  );
   const left = useMemo(
-    () => `${randomGenerator() * 80 + 10}%`,
+    () => `${randomGenerator() * GardenWidth}px`,
     [randomGenerator]
   );
   const randomRotation = useMemo(
