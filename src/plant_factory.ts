@@ -229,7 +229,7 @@ export class HtmlLSystem extends LSystemBase {
     // maxIteratiosn is log2(daysGrown)
     const maxIterations = Math.max(Math.floor(Math.log(daysGrown)), 1);
     this.maxIterations = maxIterations;
-    this.maxElements = Math.pow(3, daysGrown + 1);
+    this.maxElements = Math.max(Math.pow(3, daysGrown + 1), 6);
 
     this.tagInfos = props.tagInfos;
     this.parentSelector = props.parentSelector;

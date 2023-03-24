@@ -69,15 +69,16 @@ function PlantWrapper({
     [randomGenerator]
   );
   const randomRotation = useMemo(
-    () => randomGenerator() * 60 - 30,
+    // TODO: normal distribution at 0, std dev of 30
+    () => randomGenerator() * 30 - 15,
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => Math.floor(randomGenerator() * 7) * 0.1 + 0.3,
+    () => Math.floor(randomGenerator() * 7) * 0.1 + 0.4,
     [randomGenerator]
   );
 
-  const transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
+  const transform = `rotate(${0}deg) scale(${1})`;
 
   return (
     <div

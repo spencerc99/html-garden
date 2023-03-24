@@ -70,14 +70,14 @@ export const HtmlPlantTypeToSpecies = {
           },
           {
             tag: "a",
-            innerValue: "rgy✳️",
+            innerValue: "rgy",
             extraProps: {
               href: "http://html.energy/",
             },
           },
           {
             tag: "a",
-            innerValue: "rev🟪",
+            innerValue: "rev",
             extraProps: {
               href: "https://thehtml.review/",
             },
@@ -130,7 +130,7 @@ export const HtmlPlantTypeToSpecies = {
         maxIterations,
         useStrictDimensions: true,
       })
-        .addRule("F", "DM[+B][--B]F")
+        .addRule("F", "+DM[+B][--B]F")
         .addRule("B", "B[+F]B"),
     frameRate: FrameRate,
     activePlants: () => {
