@@ -34,6 +34,11 @@ export enum HtmlPlantType {
   "Chrono" = "Chrono",
   "Separatus" = "Separatus",
   "Lexus" = "Lexus",
+  "Espandre" = "Espandre",
+  "Basis" = "Basis",
+  "Pictus" = "Pictus",
+  "Porros" = "Porros",
+  "Liste" = "Liste",
 }
 
 export interface HtmlPlantInfo {
@@ -46,12 +51,14 @@ export interface HtmlPlantInfo {
   ) => HtmlLSystem;
   frameRate?: number;
   // returns an array corresponding to the number of active plants with a number representing how many iterations to render
+  season: string;
   activePlants: () => number[];
 }
 
 export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Linchinus]: {
     type: HtmlPlantType.Linchinus,
+    season: "all the time, everywhere",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -103,6 +110,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Botonus]: {
     type: HtmlPlantType.Botonus,
+    season: "when fun is in the air",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -149,6 +157,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Datum]: {
     type: HtmlPlantType.Datum,
+    season: "whenever the earth has energy to give",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -214,6 +223,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Separatus]: {
     type: HtmlPlantType.Separatus,
+    season: "separating",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,

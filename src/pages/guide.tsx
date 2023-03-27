@@ -10,13 +10,17 @@ export default function Guide() {
   function renderPlantRow(type: HtmlPlantType) {
     const info = HtmlPlantTypeToSpecies[type];
 
+    if (!info) {
+      return null;
+    }
+
     return (
       <tr>
         <td>
           {GenusName} {type}
         </td>
         {/* TODO: fix */}
-        <td>{info.activePlants}</td>
+        <td>{info.season}</td>
         <td>
           {/* TODO: show question mark until you have seen it */}
           <HtmlPlant
