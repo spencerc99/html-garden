@@ -32,6 +32,7 @@ export function HtmlPlant({ type, idx, daysGrown, style = {} }: Props) {
     system.current = newSystem;
     newSystem.run();
     p5.noCanvas();
+    document.querySelectorAll("canvas").forEach((e) => e.remove());
   };
 
   // The sketch draw method

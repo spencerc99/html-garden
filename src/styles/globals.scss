@@ -15,11 +15,11 @@ body {
 }
 
 body {
-  cursor: zoom-in;
+  cursor: "👁️", auto;
   background: $color-fiddle-leaf-fig;
   color: $color-elite-teal;
   height: max(100%, 100dvh);
-  width: max(1400px, 100dvw);
+  width: max(calc(1400px + 4em), 100dvw);
   position: relative;
   overflow: auto;
 
@@ -88,6 +88,24 @@ footer {
   bottom: 4%;
   p {
     margin: 0.25em 0;
+  }
+}
+
+.pageLink {
+  position: fixed;
+  bottom: 4%;
+  right: 4%;
+  width: 80px;
+  transition: transform 0.2s ease-in-out;
+  font-size: 80px;
+  text-shadow: 0 10px 5px rgba($color-darkest-forest, 0.4);
+
+  &:is(img) {
+    box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
+  }
+
+  &:hover {
+    transform: scale(1.1);
   }
 }
 
@@ -212,4 +230,35 @@ kbd {
   line-height: 1;
   padding: 2px 4px;
   white-space: nowrap;
+}
+
+.fieldGuide {
+  padding: 2em;
+  margin: 0 auto;
+
+  table {
+    max-width: 800px;
+    tbody {
+      tr {
+        height: 180px;
+
+        td:first-child {
+          background: rgba($color-darkest-forest, 0.3);
+          font-style: italic;
+          font-size: 1.2em;
+        }
+
+        td {
+          padding: 1em;
+          overflow: hidden;
+        }
+      }
+    }
+    td {
+      &:last-child {
+        width: 250px;
+      }
+      border: 1px solid black;
+    }
+  }
 }

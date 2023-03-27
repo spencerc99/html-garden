@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import {
   currentSeason,
   GenusName,
@@ -58,6 +59,13 @@ export default function Home() {
         🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
         <p>🎐 come visit again soon</p>
       </footer>
+      <Link href="/guide">
+        <img
+          className="pageLink"
+          src="./the-html-leaf-book.png"
+          alt={`parody image of Ida Geary's "The Leaf Book"`}
+        ></img>
+      </Link>
     </>
   );
 }
