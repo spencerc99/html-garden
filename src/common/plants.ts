@@ -2,7 +2,7 @@ import type p5Type from "p5";
 import { HtmlLSystem, IS_DEBUGGING } from "../plant_factory";
 export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
-export const FrameRate = 6;
+export const FrameRate = 15;
 
 const referenceDate = new Date();
 const dayOfYear = Math.floor(
@@ -41,7 +41,8 @@ export interface HtmlPlantInfo {
   getLSystem: (
     p5: p5Type,
     parentSelector: string,
-    maxIterations: number
+    maxIterations: number,
+    limitMaxElements?: boolean
   ) => HtmlLSystem;
   frameRate?: number;
   // returns an array corresponding to the number of active plants with a number representing how many iterations to render
@@ -51,7 +52,12 @@ export interface HtmlPlantInfo {
 export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Linchinus]: {
     type: HtmlPlantType.Linchinus,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) =>
       new HtmlLSystem({
         p5,
         axiom: "F",
@@ -59,6 +65,7 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 15,
         lengthMod: 1,
         iterations: 3,
+        limitMaxElements,
         parentSelector,
         tagInfos: [
           {
@@ -84,17 +91,24 @@ export const HtmlPlantTypeToSpecies = {
           },
         ],
         maxIterations,
-      }).addRule("F", "G[+F]F[-F]G"),
+      })
+        .addRule("F", "F[+F]G[-F]F")
+        .addRule("G", "G[+F]F[-F]"),
     frameRate: 10,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 3, 2, 1, 0];
     },
   },
   [HtmlPlantType.Botonus]: {
     type: HtmlPlantType.Botonus,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) =>
       new HtmlLSystem({
         p5,
         axiom: "F",
@@ -102,22 +116,45 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 25,
         lengthMod: 1,
         iterations: 2,
-        tagInfos: [{ tag: "button", innerValue: "btn" }],
+        limitMaxElements,
+        tagInfos: [
+          {
+            tag: "button",
+            innerValue: "btn",
+            extraProps: {
+              onclick: (e: React.MouseEvent<HTMLButtonElement>) => {
+                debugger;
+                e.currentTarget.attributes["flatten"] =
+                  (e.currentTarget.attributes["flatten"] ?? 0) % 90 === 60
+                    ? (e.currentTarget.attributes["flatten"] + 50) % 180
+                    : (e.currentTarget.attributes["flatten"] ?? 0) + 10;
+                const nonSkewTransform =
+                  e.currentTarget.style.transform.replace(/\s*skew.*/g, "");
+                e.currentTarget.style.transform = `${nonSkewTransform} skew(${e.currentTarget.attributes["flatten"]}deg)`;
+              },
+            },
+          },
+        ],
         parentSelector,
         maxIterations,
         renderVertically: true,
         useStrictDimensions: true,
       }).addRule("F", "F------M[----MF---MF]+++++M[+++MF----F]+"),
-    frameRate: 6,
+    frameRate: FrameRate,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 5, 2, 1, 0];
     },
   },
   [HtmlPlantType.Datum]: {
     type: HtmlPlantType.Datum,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) =>
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) =>
       new HtmlLSystem({
         p5,
         axiom: "F",
@@ -125,23 +162,31 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 30,
         lengthMod: 0.85,
         iterations: 3,
+        limitMaxElements,
         tagInfos: [{ tag: "input", extraProps: { value: "input" } }],
         parentSelector,
         maxIterations,
         useStrictDimensions: true,
       })
-        .addRule("F", "+DM[+B][--B]F")
-        .addRule("B", "B[+F]B"),
+        .addRule("F", "F[+B]F[+B][-F]")
+        .addRule("B", "B[+F]B[-F]"),
+    // .addRule("F", "+DM[+B][--B]F")
+    // .addRule("B", "B[+F]B"),
     frameRate: FrameRate,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 5, 2, 1, 0];
     },
   },
   [HtmlPlantType.Chrono]: {
     type: HtmlPlantType.Chrono,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) => {
       const time = new Date().toLocaleTimeString().split(" ")[0];
       return new HtmlLSystem({
         p5,
@@ -149,6 +194,7 @@ export const HtmlPlantTypeToSpecies = {
         angle: 23,
         lineLength: 30,
         lengthMod: 1,
+        limitMaxElements,
         iterations: 2,
         tagInfos: [
           { tag: "time", innerValue: time, extraProps: { datetime: time } },
@@ -163,12 +209,17 @@ export const HtmlPlantTypeToSpecies = {
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 5, 2, 1, 0];
     },
   },
   [HtmlPlantType.Separatus]: {
     type: HtmlPlantType.Separatus,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) => {
       return new HtmlLSystem({
         p5,
         axiom: "G",
@@ -176,22 +227,28 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 12,
         lengthMod: 1,
         iterations: 3,
+        limitMaxElements,
         tagInfos: [{ tag: "hr", innerValue: "" }],
         parentSelector,
         maxIterations,
         useStrictWidth: true,
-      }).addRule("G", "G[+G][-G]M[+G]");
+      }).addRule("G", "G[+G]GM[+G][-G]");
     },
     frameRate: FrameRate * 3,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 5, 2, 1, 0];
     },
   },
   [HtmlPlantType.Lexus]: {
     type: HtmlPlantType.Lexus,
-    getLSystem: (p5: p5Type, parentSelector: string, maxIterations: number) => {
+    getLSystem: (
+      p5: p5Type,
+      parentSelector: string,
+      maxIterations: number,
+      limitMaxElements?: boolean
+    ) => {
       return new HtmlLSystem({
         p5,
         axiom: "F",
@@ -199,6 +256,7 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 28,
         lengthMod: 1,
         iterations: 3,
+        limitMaxElements,
         tagInfos: [
           { tag: "code" },
           { tag: "kbd", innerValue: "Cmd" },
@@ -213,7 +271,7 @@ export const HtmlPlantTypeToSpecies = {
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [1, 2, 3, 0, 2, 0, 4, 2, 0, 0, 1, 2, 1, 1];
+      return [3, 4, 5, 2, 1, 0];
     },
   },
 } satisfies Record<HtmlPlantType, HtmlPlantInfo>;

@@ -14,9 +14,16 @@ interface Props {
   idx: number;
   daysGrown: number;
   style?: CSSProperties;
+  limitMaxElements?: boolean;
 }
 
-export function HtmlPlant({ type, idx, daysGrown, style = {} }: Props) {
+export function HtmlPlant({
+  type,
+  idx,
+  daysGrown,
+  style = {},
+  limitMaxElements,
+}: Props) {
   const plantId = useMemo(() => `${type}-${idx}`, [idx, type]);
 
   const info = useMemo(() => HtmlPlantTypeToSpecies[type], [type]);

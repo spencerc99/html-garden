@@ -18,11 +18,12 @@ export default function Guide() {
         {/* TODO: fix */}
         <td>{info.activePlants}</td>
         <td>
+          {/* TODO: show question mark until you have seen it */}
           <HtmlPlant
             type={type}
             idx={0}
-            daysGrown={3}
-            style={{ transform: "translate(100px, 60px)" }}
+            daysGrown={4}
+            style={{ transform: "translate(80px, 90px) scale(0.8)" }}
           />
         </td>
       </tr>

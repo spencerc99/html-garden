@@ -201,7 +201,7 @@ export class LSystem extends LSystemBase {
 interface ElementTagInfo {
   tag: keyof HTMLElementTagNameMap;
   innerValue?: string;
-  extraProps?: Record<string, string>;
+  extraProps?: Record<string, any>;
 }
 
 export class HtmlLSystem extends LSystemBase {
@@ -221,6 +221,7 @@ export class HtmlLSystem extends LSystemBase {
       useStrictDimensions?: boolean;
       useStrictWidth?: boolean;
       renderVertically?: boolean;
+      limitMaxElements?: boolean;
     }
   ) {
     super(props);
@@ -229,7 +230,9 @@ export class HtmlLSystem extends LSystemBase {
     // maxIteratiosn is log2(daysGrown)
     const maxIterations = Math.max(Math.floor(Math.log(daysGrown)), 1);
     this.maxIterations = maxIterations;
-    this.maxElements = Math.max(Math.pow(3, daysGrown + 1), 6);
+    this.maxElements = props.limitMaxElements
+      ? Math.max(Math.pow(3, daysGrown + 2), 9)
+      : Infinity;
 
     this.tagInfos = props.tagInfos;
     this.parentSelector = props.parentSelector;

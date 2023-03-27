@@ -74,7 +74,7 @@ hgroup,
 footer {
   z-index: 10;
   backdrop-filter: blur(4.2px);
-  text-shadow: 0 0 5px rgba($color-darkest-forest, 0.4);
+  text-shadow: 0 4px 5px rgba($color-darkest-forest, 0.4);
   margin-left: 2em;
   margin-right: 2em;
 
@@ -95,10 +95,11 @@ footer {
   position: fixed;
   bottom: 4%;
   right: 4%;
+  z-index: 10;
   width: 80px;
   transition: transform 0.2s ease-in-out;
   font-size: 80px;
-  text-shadow: 0 10px 5px rgba($color-darkest-forest, 0.4);
+  text-shadow: 0 6px 5px rgba($color-darkest-forest, 0.4);
 
   &:is(img) {
     box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
@@ -193,6 +194,7 @@ button {
   padding: 0;
   margin: 0;
   background: seashell;
+  cursor: pointer;
 }
 
 input {
@@ -240,7 +242,7 @@ kbd {
     max-width: 800px;
     tbody {
       tr {
-        height: 180px;
+        height: 220px;
 
         td:first-child {
           background: rgba($color-darkest-forest, 0.3);
@@ -256,7 +258,7 @@ kbd {
     }
     td {
       &:last-child {
-        width: 250px;
+        width: 280px;
       }
       border: 1px solid black;
     }

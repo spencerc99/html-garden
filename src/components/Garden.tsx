@@ -57,9 +57,18 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
+  const numPlants = Object.keys(HtmlPlantType).length;
+  const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
+
   const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
-  // TODO: percentage is not great for diff screen sizes because they _look different_. Probably should just use a max width and height and then use pixels, but use overflow:hidden to hide the overflow.
+  const inSecondHalf = typeIdx + 1 > numPlants / 2;
+  const basisBottom = inSecondHalf ? GardenHeight / 2 + 100 : 100;
+  const basisLeft =
+    ((GardenWidth - 400) / (numPlants / 2)) *
+      ((typeIdx + 1) % (numPlants / 2)) +
+    200;
+  console.log(plantType, typeIdx, basisLeft, basisBottom);
   const bottom = useMemo(
     () => `${randomGenerator() * GardenHeight}px`,
     [randomGenerator]
@@ -68,17 +77,25 @@ function PlantWrapper({
     () => `${randomGenerator() * GardenWidth}px`,
     [randomGenerator]
   );
+  // const bottom = useMemo(
+  //   () => `${randomGenerator() * 150 - 75 + basisBottom}px`,
+  //   [basisBottom, randomGenerator]
+  // );
+  // const left = useMemo(
+  //   () => `${randomGenerator() * 200 + basisLeft}px`,
+  //   [basisLeft, randomGenerator]
+  // );
   const randomRotation = useMemo(
     // TODO: normal distribution at 0, std dev of 30
-    () => randomGenerator() * 30 - 15,
+    () => Math.floor(randomGenerator() * 9) * 10 - 45,
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => Math.floor(randomGenerator() * 7) * 0.1 + 0.4,
+    () => Math.floor(randomGenerator() * 5) * 0.1 + 0.4,
     [randomGenerator]
   );
 
-  const transform = `rotate(${0}deg) scale(${1})`;
+  const transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
 
   return (
     <div
