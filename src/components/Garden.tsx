@@ -74,7 +74,7 @@ function PlantWrapper({
     [randomGenerator]
   );
   const left = useMemo(
-    () => `${randomGenerator() * GardenWidth}px`,
+    () => `${randomGenerator() * (GardenWidth - 200) + 100}px`,
     [randomGenerator]
   );
   // const bottom = useMemo(
@@ -91,7 +91,7 @@ function PlantWrapper({
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => Math.floor(randomGenerator() * 4) * 0.1 + 0.6,
+    () => Math.floor(randomGenerator() * 4) * 0.1 + 0.55,
     [randomGenerator]
   );
 
