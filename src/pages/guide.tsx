@@ -1,21 +1,31 @@
+import { Head } from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import {
   GenusName,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
+import { useStickyState } from "../common/utils";
 import { HtmlPlant } from "../components/HtmlPlant";
+import "../styles/guide.module.scss";
 
 export default function Guide() {
+  const [seenPlants] = useStickyState("seenPlants", []);
+
+  useEffect(() => {
+    document.querySelector("body").classList.add("guide");
+    return () => {
+      document.querySelector("body").classList.remove("guide");
+    };
+  });
+
   function renderPlantRow(type: HtmlPlantType) {
     const info = HtmlPlantTypeToSpecies[type];
-
-    if (!info) {
-      return null;
-    }
+    const seenBefore = seenPlants.includes(type);
 
     return (
-      <tr>
+      <tr key={type}>
         <td>
           {GenusName} {type}
         </td>
@@ -23,12 +33,16 @@ export default function Guide() {
         <td>{info.season}</td>
         <td>
           {/* TODO: show question mark until you have seen it */}
-          <HtmlPlant
-            type={type}
-            idx={0}
-            daysGrown={3}
-            style={{ transform: "translate(80px, 90px) scale(0.8)" }}
-          />
+          {seenBefore ? (
+            <HtmlPlant
+              type={type}
+              idx={0}
+              daysGrown={3}
+              style={{ transform: "translate(80px, 90px) scale(0.8)" }}
+            />
+          ) : (
+            "???"
+          )}
         </td>
       </tr>
     );
@@ -37,6 +51,11 @@ export default function Guide() {
   return (
     <div className="fieldGuide">
       <h1>The HTML Leaf Book</h1>
+      <p>
+        as you see specimen in the wild, this field guide will automatically
+        fill in with samples. Visit again on different days to see the garden
+        grow.
+      </p>
       <table className="fieldGuideTable">
         <thead>
           <tr>

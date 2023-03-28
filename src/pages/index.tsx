@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import {
   currentSeason,
   GenusName,
@@ -7,9 +8,8 @@ import {
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
+import { useStickyState } from "../common/utils";
 import { Garden } from "../components/Garden";
-
-import styles from "../styles/Home.module.scss";
 
 const StartDate = new Date("2023-03-15");
 
@@ -27,6 +27,13 @@ export default function Home() {
     .filter((s) => s.activePlants().length)
     .map((s) => s.type);
   const numSpeciesBlooming = currentSpecies.length;
+  const [seenPlants, setSeenPlants] = useStickyState("seenPlants", []);
+
+  useEffect(() => {
+    if (currentSpecies.filter((c) => !seenPlants.includes(c)).length) {
+      setSeenPlants(Array.from(new Set([...seenPlants, ...currentSpecies])));
+    }
+  }, [currentSpecies]);
 
   return (
     <>

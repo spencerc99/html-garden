@@ -35,6 +35,10 @@ body {
     background-repeat: repeat;
     z-index: -1;
   }
+
+  &.guide {
+    width: inherit;
+  }
 }
 
 * {
