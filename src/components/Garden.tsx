@@ -57,26 +57,16 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
-  const numPlants = Object.keys(HtmlPlantType).length;
-  const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
-
   const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
-  const inSecondHalf = typeIdx + 1 > numPlants / 2;
-  const basisBottom = inSecondHalf ? GardenHeight / 2 + 100 : 100;
-  const basisLeft =
-    ((GardenWidth - 400) / (numPlants / 2)) *
-      ((typeIdx + 1) % (numPlants / 2)) +
-    200;
-  console.log(plantType, typeIdx, basisLeft, basisBottom);
-  const bottom = useMemo(
-    () => `${randomGenerator() * GardenHeight}px`,
-    [randomGenerator]
-  );
-  const left = useMemo(
-    () => `${randomGenerator() * (GardenWidth - 200) + 100}px`,
-    [randomGenerator]
-  );
+  // const numPlants = Object.keys(HtmlPlantType).length;
+  // const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
+  // const inSecondHalf = typeIdx + 1 > numPlants / 2;
+  // const basisBottom = inSecondHalf ? GardenHeight / 2 + 100 : 100;
+  // const basisLeft =
+  //   ((GardenWidth - 400) / (numPlants / 2)) *
+  //     ((typeIdx + 1) % (numPlants / 2)) +
+  //   200;
   // const bottom = useMemo(
   //   () => `${randomGenerator() * 150 - 75 + basisBottom}px`,
   //   [basisBottom, randomGenerator]
@@ -85,6 +75,14 @@ function PlantWrapper({
   //   () => `${randomGenerator() * 200 + basisLeft}px`,
   //   [basisLeft, randomGenerator]
   // );
+  const bottom = useMemo(
+    () => `${randomGenerator() * GardenHeight}px`,
+    [randomGenerator]
+  );
+  const left = useMemo(
+    () => `${randomGenerator() * (GardenWidth - 200) + 100}px`,
+    [randomGenerator]
+  );
   const randomRotation = useMemo(
     // TODO: normal distribution at 0, std dev of 30
     () => Math.floor(randomGenerator() * 9) * 10 - 45,
