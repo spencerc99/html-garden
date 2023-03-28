@@ -2,7 +2,9 @@ import type p5Type from "p5";
 import seedrandom from "seedrandom";
 
 export const IS_DEBUGGING = false;
-const plantRandomGenerator = seedrandom(new Date().toLocaleDateString());
+export const Day = new Date().toLocaleDateString();
+console.log(`${Day} in the garden`);
+export const DayRandomGenerator = seedrandom(Day);
 
 // return a random element from the given array
 function randomElement<T = any>(arr: T[], weights?: number[]): T {
@@ -152,7 +154,7 @@ class LSystemBase {
     chars.forEach((c) => {
       if (this.rules.hasOwnProperty(c)) {
         var rule = this.rules[c];
-        var r = plantRandomGenerator();
+        var r = DayRandomGenerator();
         if (r <= rule.chance) {
           s += rule.transform;
         }

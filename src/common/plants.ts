@@ -2,7 +2,7 @@ import type p5Type from "p5";
 import { HtmlLSystem, IS_DEBUGGING } from "../plant_factory";
 export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
-export const FrameRate = 20;
+export const FrameRate = 30;
 
 const referenceDate = new Date();
 const dayOfYear = Math.floor(
@@ -30,16 +30,16 @@ export function currentSeason() {
 const time = new Date().toLocaleTimeString().split(" ")[0];
 
 export enum HtmlPlantType {
-  "Linchinus" = "Linchinus",
   "Botonus" = "Botonus",
-  "Datum" = "Datum",
   "Chrono" = "Chrono",
-  "Separatus" = "Separatus",
-  "Lexus" = "Lexus",
+  "Linchinus" = "Linchinus",
   "Espandre" = "Espandre",
+  "Lexus" = "Lexus",
   "Basis" = "Basis",
+  "Datum" = "Datum",
   "Pictus" = "Pictus",
   "Porros" = "Porros",
+  "Separatus" = "Separatus",
   "Liste" = "Liste",
 }
 
@@ -134,8 +134,8 @@ export const HtmlPlantTypeToSpecies = {
               onclick: (e: React.MouseEvent<HTMLButtonElement>) => {
                 e.currentTarget.attributes["flatten"] =
                   (e.currentTarget.attributes["flatten"] ?? 0) % 90 === 60
-                    ? (e.currentTarget.attributes["flatten"] + 50) % 180
-                    : (e.currentTarget.attributes["flatten"] ?? 0) + 10;
+                    ? (e.currentTarget.attributes["flatten"] + 60) % 180
+                    : (e.currentTarget.attributes["flatten"] ?? 0) + 30;
                 const nonSkewTransform =
                   e.currentTarget.style.transform.replace(/\s*skew.*/g, "");
                 e.currentTarget.style.transform = `${nonSkewTransform} skew(${e.currentTarget.attributes["flatten"]}deg)`;
@@ -153,7 +153,7 @@ export const HtmlPlantTypeToSpecies = {
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [3, 4, 1, 2];
+      return [1, 2, 3];
     },
   },
   [HtmlPlantType.Datum]: {
@@ -185,7 +185,7 @@ export const HtmlPlantTypeToSpecies = {
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [3, 4, 1, 2];
+      return [1, 2, 3];
     },
   },
   [HtmlPlantType.Chrono]: {
@@ -217,7 +217,7 @@ export const HtmlPlantTypeToSpecies = {
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [3, 4, 1, 2];
+      return [1, 2, 3];
     },
   },
   [HtmlPlantType.Separatus]: {
@@ -242,13 +242,13 @@ export const HtmlPlantTypeToSpecies = {
         useStrictWidth: true,
       })
         .addRule("S", "G[+G][++F]G[--F][-G]M")
-        .addRule("G", "G[+G][++F]G[--F][-G]M", 0.9);
+        .addRule("G", "G[+G][++F]G[--F][-G]M");
     },
     frameRate: FrameRate * 3,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [3, 4, 1, 2];
+      return [1, 2, 3];
     },
   },
   [HtmlPlantType.Lexus]: {
@@ -276,14 +276,14 @@ export const HtmlPlantTypeToSpecies = {
         ],
         parentSelector,
       })
-        .addRule("S", "F[+F][-F]+")
-        .addRule("F", "F[+F][-F]+", 0.7);
+        .addRule("S", "F[+F][-F]+[-F]")
+        .addRule("F", "F[+F][-F]+", 0.8);
     },
     frameRate: FrameRate * 2,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in
       // get day of the year from referenceDate
-      return [3, 4, 1, 2];
+      return [1, 2, 3];
     },
   },
   [HtmlPlantType.Espandre]: {

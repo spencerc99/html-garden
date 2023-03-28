@@ -16,10 +16,10 @@ body {
 
 body {
   cursor: "👁️", auto;
-  background: $color-fiddle-leaf-fig;
+  background: $color-green-glint;
   color: $color-elite-teal;
   height: max(100%, 100dvh);
-  width: max(calc(1400px + 4em), 100dvw);
+  width: max(2400px, 100dvw);
   position: relative;
   overflow: auto;
 
@@ -47,20 +47,10 @@ body {
 
 #garden {
   position: relative;
+  background: url("/garden-background.png");
   // NOTE: keep this in sync w PlantWrapper for random generation
-  width: 1400px;
-  height: 600px;
-  // border: 6px solid #293b1a;
-  // border-radius: 8px;
-  // border-bottom: 6px solid #293b1a;
-  margin: 2em;
-  // &::after {
-  //   position: absolute;
-  //   bottom: -20px;
-  //   left: 50%;
-  //   content: "garden ends here";
-  //   font-style: italic;
-  // }
+  width: 2400px;
+  height: 1400px;
 }
 
 main {
@@ -77,7 +67,6 @@ hgroup {
 hgroup,
 footer {
   z-index: 10;
-  backdrop-filter: blur(4.2px);
   text-shadow: 0 4px 5px rgba($color-darkest-forest, 0.4);
   margin-left: 2em;
   margin-right: 2em;
@@ -90,6 +79,7 @@ footer {
 footer {
   position: fixed;
   bottom: 4%;
+  backdrop-filter: blur(4.2px);
   p {
     margin: 0.25em 0;
   }
@@ -122,7 +112,6 @@ footer {
   position: absolute;
 
   label {
-    position: fixed;
     opacity: 0;
     z-index: 10;
     background: rgba($color-fiddle-leaf-fig, 0.8);
@@ -255,22 +244,19 @@ kbd {
         height: 250px;
 
         td:first-child {
-          background: rgba($color-darkest-forest, 0.3);
           font-style: italic;
           font-size: 1.2em;
         }
 
         td {
           padding: 1em;
-          overflow: hidden;
+          &:last-child {
+            background: $color-ghoul;
+            width: 280px;
+          }
+          border: 1px solid black;
         }
       }
-    }
-    td {
-      &:last-child {
-        width: 280px;
-      }
-      border: 1px solid black;
     }
   }
 }
