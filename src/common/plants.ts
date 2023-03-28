@@ -189,6 +189,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Chrono]: {
     type: HtmlPlantType.Chrono,
+    season: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -259,7 +260,7 @@ export const HtmlPlantTypeToSpecies = {
     ) => {
       return new HtmlLSystem({
         p5,
-        axiom: "F",
+        axiom: "S",
         angle: 70,
         lineLength: 28,
         lengthMod: 1,
@@ -272,7 +273,9 @@ export const HtmlPlantTypeToSpecies = {
           { tag: "var" },
         ],
         parentSelector,
-      }).addRule("F", "F[+F][-F]+");
+      })
+        .addRule("S", "F[+F][-F]+")
+        .addRule("F", "F[+F][-F]+", 0.7);
     },
     frameRate: FrameRate * 2,
     activePlants: () => {
@@ -281,4 +284,5 @@ export const HtmlPlantTypeToSpecies = {
       return [3, 4, 1, 2];
     },
   },
+  // @ts-ignore
 } satisfies Record<HtmlPlantType, HtmlPlantInfo>;

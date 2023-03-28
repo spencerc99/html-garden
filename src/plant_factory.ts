@@ -150,6 +150,7 @@ class LSystemBase {
     chars.forEach((c) => {
       if (this.rules.hasOwnProperty(c)) {
         var rule = this.rules[c];
+        // TODO: Use random pseudo-random number generator seeded with the day of the year
         var r = this.p5.random();
         if (r <= rule.chance) {
           s += rule.transform;
