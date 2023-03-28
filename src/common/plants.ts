@@ -295,6 +295,7 @@ export const HtmlPlantTypeToSpecies = {
       daysGrown: number,
       limitMaxElements?: boolean
     ) => {
+      //   @ts-ignore
       return new HtmlLSystem({ p5 });
     },
     frameRate: FrameRate * 2,
@@ -313,6 +314,7 @@ export const HtmlPlantTypeToSpecies = {
       daysGrown: number,
       limitMaxElements?: boolean
     ) => {
+      //   @ts-ignore
       return new HtmlLSystem({ p5 });
     },
     frameRate: FrameRate * 2,
@@ -331,6 +333,7 @@ export const HtmlPlantTypeToSpecies = {
       daysGrown: number,
       limitMaxElements?: boolean
     ) => {
+      //   @ts-ignore
       return new HtmlLSystem({ p5 });
     },
     frameRate: FrameRate * 2,
@@ -349,6 +352,7 @@ export const HtmlPlantTypeToSpecies = {
       daysGrown: number,
       limitMaxElements?: boolean
     ) => {
+      //   @ts-ignore
       return new HtmlLSystem({ p5 });
     },
     frameRate: FrameRate * 2,
@@ -367,6 +371,7 @@ export const HtmlPlantTypeToSpecies = {
       daysGrown: number,
       limitMaxElements?: boolean
     ) => {
+      //   @ts-ignore
       return new HtmlLSystem({ p5 });
     },
     frameRate: FrameRate * 2,
