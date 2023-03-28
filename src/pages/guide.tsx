@@ -26,7 +26,7 @@ export default function Guide() {
           <HtmlPlant
             type={type}
             idx={0}
-            daysGrown={4}
+            daysGrown={3}
             style={{ transform: "translate(80px, 90px) scale(0.8)" }}
           />
         </td>

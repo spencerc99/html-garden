@@ -226,10 +226,13 @@ export class HtmlLSystem extends LSystemBase {
   ) {
     super(props);
 
-    const daysGrown = props.maxIterations;
+    const daysGrown = props.iterations;
+    // exponentially asymptote at 4
+    this.iterations = Math.min(daysGrown, 4);
     // maxIteratiosn is log2(daysGrown)
-    const maxIterations = Math.max(Math.floor(Math.log(daysGrown)), 1);
-    this.maxIterations = maxIterations;
+    // const maxIterations = Math.max(Math.floor(Math.log(daysGrown)), 1);
+    // NOTE: always use iterations.
+    this.maxIterations = 1;
     this.maxElements = props.limitMaxElements
       ? Math.max(Math.pow(3, daysGrown + 2), 9)
       : Infinity;

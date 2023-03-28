@@ -35,7 +35,12 @@ export function HtmlPlant({
      * Branching Systems
      **/
 
-    const newSystem = info.getLSystem(p5, `.${plantId}`, daysGrown);
+    const newSystem = info.getLSystem(
+      p5,
+      `.${plantId}`,
+      daysGrown,
+      limitMaxElements
+    );
     system.current = newSystem;
     newSystem.run();
     p5.noCanvas();
