@@ -119,7 +119,7 @@ export const HtmlPlantTypeToSpecies = {
       new HtmlLSystem({
         p5,
         axiom: "F",
-        angle: 11.7,
+        angle: 33,
         lineLength: 25,
         lengthMod: 1,
         iterations: daysGrown,
@@ -143,9 +143,11 @@ export const HtmlPlantTypeToSpecies = {
           },
         ],
         parentSelector,
+        useStrictWidth: true,
         renderVertically: true,
-        useStrictDimensions: true,
-      }).addRule("F", "F------M[----MF---MF]+++++M[+++MF----F]+"),
+      })
+        .addRule("F", "F[+G]F[-G]")
+        .addRule("G", "G[-G]M[+F]"),
     frameRate: FrameRate,
     activePlants: () => {
       // based on reference date, return how many numbers of plants should be active based on the season it is active in

@@ -283,9 +283,14 @@ export class HtmlLSystem extends LSystemBase {
       while (idx < chars.length) {
         const toProcess = chars.slice(idx).join("");
         // sort by longest first, check matches against toProcess
-        const [[_key, handler]] = Object.entries(this.instructions)
+        const [matches] = Object.entries(this.instructions)
           .sort(([a], [b]) => b.length - a.length)
           .filter(([key]) => toProcess.startsWith(key));
+        if (!matches) {
+          idx += 1;
+          continue;
+        }
+        const [_key, handler] = matches;
         this.drawingStack.push({ key: _key as any, instruction: handler });
         idx += _key.length;
       }
