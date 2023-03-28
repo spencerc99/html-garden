@@ -242,7 +242,7 @@ export const HtmlPlantTypeToSpecies = {
         useStrictWidth: true,
       })
         .addRule("S", "G[+G][++F]G[--F][-G]M")
-        .addRule("G", "G[+G][++F]G[--F][-G]M", 0.8);
+        .addRule("G", "G[+G][++F]G[--F][-G]M", 0.9);
     },
     frameRate: FrameRate * 3,
     activePlants: () => {

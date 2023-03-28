@@ -37,7 +37,7 @@ export default function Guide() {
               type={type}
               idx={0}
               daysGrown={3}
-              style={{ transform: "translate(80px, 90px) scale(0.8)" }}
+              style={{ transform: "translate(80px, 110px) scale(0.8)" }}
             />
           ) : (
             "???"

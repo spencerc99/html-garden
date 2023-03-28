@@ -37,7 +37,7 @@ body {
   }
 
   &.guide {
-    width: inherit;
+    width: max(500px, 100%);
   }
 }
 
@@ -242,11 +242,17 @@ kbd {
   padding: 2em;
   margin: 0 auto;
 
-  table {
+  @media screen and (max-width: 800px) {
+    padding: 1em;
+  }
+
+  .fieldGuideTable {
+    width: fit-content;
     max-width: 800px;
+    overflow-x: auto;
     tbody {
       tr {
-        height: 220px;
+        height: 250px;
 
         td:first-child {
           background: rgba($color-darkest-forest, 0.3);
