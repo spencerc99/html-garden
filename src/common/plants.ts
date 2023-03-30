@@ -1,5 +1,6 @@
 import type p5Type from "p5";
-import { HtmlLSystem, IS_DEBUGGING } from "../plant_factory";
+import { GardenGrowingDays } from "../pages";
+import { DayRandomGenerator, HtmlLSystem } from "../plant_factory";
 export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
 export const FrameRate = 30;
@@ -57,6 +58,22 @@ export interface HtmlPlantInfo {
   activePlants: () => number[];
 }
 
+// Use month to determine which plants are in season randomly
+// every day of growing, a 50% chance for each plant to grow
+// if a plant grows, it will grow for a random number of days logarithmically up to 5 days
+const DefaultGetActivePlants = () => {
+  const activePlants: number[] = Array.from(
+    { length: GardenGrowingDays },
+    (_, i) => GardenGrowingDays - i
+  ).flatMap((day) => (DayRandomGenerator() > 0.5 ? day : []));
+
+  // add some entropy to the number of active plants
+  return activePlants.map((day) => {
+    // return 4 - (4 - Math.log10(day)) * Math.exp(-0.25 * day);
+    return Math.min(Math.floor(Math.log(day) / Math.log(2)), 5);
+  });
+};
+
 export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Linchinus]: {
     type: HtmlPlantType.Linchinus,
@@ -104,9 +121,7 @@ export const HtmlPlantTypeToSpecies = {
         .addRule("G", "G[+F]F[-F]"),
     frameRate: FrameRate,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [3, 4, 2, 1, 0];
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Botonus]: {
@@ -151,9 +166,8 @@ export const HtmlPlantTypeToSpecies = {
         .addRule("G", "G[-G]M[+F]"),
     frameRate: FrameRate,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [1, 2, 3];
+      console.log(DefaultGetActivePlants());
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Datum]: {
@@ -183,9 +197,7 @@ export const HtmlPlantTypeToSpecies = {
     // .addRule("B", "B[+F]B"),
     frameRate: FrameRate,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [1, 2, 3];
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Chrono]: {
@@ -215,9 +227,7 @@ export const HtmlPlantTypeToSpecies = {
     },
     frameRate: FrameRate,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [1, 2, 3];
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Separatus]: {
@@ -246,9 +256,7 @@ export const HtmlPlantTypeToSpecies = {
     },
     frameRate: FrameRate * 3,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [1, 2, 3];
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Lexus]: {
@@ -281,9 +289,7 @@ export const HtmlPlantTypeToSpecies = {
     },
     frameRate: FrameRate * 2,
     activePlants: () => {
-      // based on reference date, return how many numbers of plants should be active based on the season it is active in
-      // get day of the year from referenceDate
-      return [1, 2, 3];
+      return DefaultGetActivePlants();
     },
   },
   [HtmlPlantType.Espandre]: {

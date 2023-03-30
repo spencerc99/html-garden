@@ -184,11 +184,9 @@ time {
   &:nth-of-type(13n) {
     animation-delay: #{(random(5) / 2) + 1}s;
   }
-  // overflow: hidden;
 }
 
 hr {
-  // border-color: black;
   margin: 0;
   height: 1px;
   border-color: rgb(31, 172, 31);
