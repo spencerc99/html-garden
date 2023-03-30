@@ -6,6 +6,7 @@ import {
   GenusName,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
+import { Day } from "../plant_factory";
 
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
@@ -22,8 +23,7 @@ export function Garden() {
   // or can you just adopt one (fake this by choosing a random one)
   // maybe by visiting the site many times, you earn the right to plant one.
 
-  // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering?
-  // TODO: some progress or indicator of seeds of other ones that aren't growing right now?
+  // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering? maybe make it out of datetime in a circle + a hand using progress bars or separatus
   const plants = useMemo(() => {
     return Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
       species
@@ -46,8 +46,8 @@ export function Garden() {
   );
 }
 
-const GardenWidth = 1400;
-const GardenHeight = 600;
+const GardenWidth = 2400;
+const GardenHeight = 1400;
 function PlantWrapper({
   plantType,
   daysGrown,
@@ -57,16 +57,15 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
-  const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
+  const plantId = useMemo(() => `${plantType}-${idx}-${Day}`, [idx, plantType]);
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
+  // const randomGenerator = DayRandomGenerator;
   // const numPlants = Object.keys(HtmlPlantType).length;
   // const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
   // const inSecondHalf = typeIdx + 1 > numPlants / 2;
-  // const basisBottom = inSecondHalf ? GardenHeight / 2 + 100 : 100;
+  // const basisBottom = inSecondHalf ? 50 : GardenHeight / 2 + 100;
   // const basisLeft =
-  //   ((GardenWidth - 400) / (numPlants / 2)) *
-  //     ((typeIdx + 1) % (numPlants / 2)) +
-  //   200;
+  //   ((GardenWidth - 200) / (numPlants / 2)) * ((typeIdx + 1) % (numPlants / 2));
   // const bottom = useMemo(
   //   () => `${randomGenerator() * 150 - 75 + basisBottom}px`,
   //   [basisBottom, randomGenerator]
@@ -76,7 +75,8 @@ function PlantWrapper({
   //   [basisLeft, randomGenerator]
   // );
   const bottom = useMemo(
-    () => `${randomGenerator() * GardenHeight}px`,
+    () =>
+      `${(Math.floor(randomGenerator() * 50) * (GardenHeight - 100)) / 50}px`,
     [randomGenerator]
   );
   const left = useMemo(
@@ -85,11 +85,11 @@ function PlantWrapper({
   );
   const randomRotation = useMemo(
     // TODO: normal distribution at 0, std dev of 30
-    () => Math.floor(randomGenerator() * 9) * 10 - 45,
+    () => Math.floor(randomGenerator() * 6) * 10 - 30,
     [randomGenerator]
   );
   const randomScale = useMemo(
-    () => Math.floor(randomGenerator() * 4) * 0.1 + 0.55,
+    () => Math.floor(randomGenerator() * 4) * 0.1 + 0.75,
     [randomGenerator]
   );
 
@@ -101,10 +101,16 @@ function PlantWrapper({
       style={{
         bottom,
         left,
-        transform,
       }}
     >
-      <HtmlPlant type={plantType} idx={idx} daysGrown={daysGrown} />
+      <HtmlPlant
+        type={plantType}
+        idx={idx}
+        daysGrown={daysGrown}
+        style={{
+          transform,
+        }}
+      />
       <label>
         {GenusName} {plantType}
       </label>

@@ -12,6 +12,9 @@ import { useStickyState } from "../common/utils";
 import { Garden } from "../components/Garden";
 
 const StartDate = new Date("2023-03-15");
+export const GardenGrowingDays = Math.floor(
+  (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
+);
 
 function joinWithAnd(arr: string[]) {
   if (arr.length === 1) {
@@ -45,10 +48,7 @@ export default function Home() {
         <h1>html garden</h1>
         <p>
           we are in {seasonName}. {numSpeciesBlooming}/{totalSpecies} species
-          are blooming. the garden has been growing for{" "}
-          {Math.floor(
-            (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
-          )}{" "}
+          are blooming. the garden has been growing for {GardenGrowingDays}{" "}
           days.
         </p>
         <p>
@@ -63,7 +63,9 @@ export default function Home() {
         <Garden />
       </main>
       <footer>
-        🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
+        <span>
+          🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
+        </span>
         <p>🎐 come visit again soon</p>
       </footer>
       <Link href="/guide">

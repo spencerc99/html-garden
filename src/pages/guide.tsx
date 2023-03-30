@@ -31,13 +31,12 @@ export default function Guide() {
         {/* TODO: fix */}
         <td>{info.season}</td>
         <td>
-          {/* TODO: show question mark until you have seen it */}
           {seenBefore ? (
             <HtmlPlant
               type={type}
               idx={0}
               daysGrown={3}
-              style={{ transform: "translate(80px, 110px) scale(0.8)" }}
+              style={{ transform: "translate(80px, 100px) scale(0.8)" }}
             />
           ) : (
             "???"
