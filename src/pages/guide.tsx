@@ -31,7 +31,6 @@ export default function Guide() {
         {/* TODO: fix */}
         <td>{info.season}</td>
         <td>
-          {/* TODO: show question mark until you have seen it */}
           {seenBefore ? (
             <HtmlPlant
               type={type}

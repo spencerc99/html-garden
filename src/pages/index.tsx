@@ -63,7 +63,9 @@ export default function Home() {
         <Garden />
       </main>
       <footer>
-        🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
+        <span>
+          🪴 planted by <a href="https://www.spencerchang.me/">sc</a>
+        </span>
         <p>🎐 come visit again soon</p>
       </footer>
       <Link href="/guide">

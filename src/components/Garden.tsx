@@ -6,7 +6,7 @@ import {
   GenusName,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
-import { DayRandomGenerator } from "../plant_factory";
+import { Day } from "../plant_factory";
 
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
@@ -23,8 +23,7 @@ export function Garden() {
   // or can you just adopt one (fake this by choosing a random one)
   // maybe by visiting the site many times, you earn the right to plant one.
 
-  // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering?
-  // TODO: some progress or indicator of seeds of other ones that aren't growing right now?
+  // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering? maybe make it out of datetime in a circle + a hand using progress bars or separatus
   const plants = useMemo(() => {
     return Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
       species
@@ -58,9 +57,9 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
-  const plantId = useMemo(() => `${plantType}-${idx}`, [idx, plantType]);
-  // const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
-  const randomGenerator = DayRandomGenerator;
+  const plantId = useMemo(() => `${plantType}-${idx}-${Day}`, [idx, plantType]);
+  const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
+  // const randomGenerator = DayRandomGenerator;
   // const numPlants = Object.keys(HtmlPlantType).length;
   // const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
   // const inSecondHalf = typeIdx + 1 > numPlants / 2;

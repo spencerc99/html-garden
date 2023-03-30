@@ -9,14 +9,14 @@ export const DayRandomGenerator = seedrandom(Day);
 // return a random element from the given array
 function randomElement<T = any>(arr: T[], weights?: number[]): T {
   if (!weights) {
-    return arr[Math.floor(Math.random() * arr.length)];
+    return arr[Math.floor(DayRandomGenerator() * arr.length)];
   }
 
   let totalWeight = 0;
   for (let i = 0; i < weights.length; i++) {
     totalWeight += weights[i];
   }
-  let random = Math.random() * totalWeight;
+  let random = DayRandomGenerator() * totalWeight;
   for (let i = 0; i < arr.length; i++) {
     if (random < weights[i]) {
       return arr[i];

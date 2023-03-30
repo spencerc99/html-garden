@@ -17,7 +17,7 @@ export function useStickyState<T>(
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [value, setValue] = React.useState<T>(defaultValue);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const stickyValue = getLocalStorageItem<T>(localStorageId);
     if (stickyValue !== null) {
       setValue(stickyValue);

@@ -16,7 +16,7 @@ body {
 
 body {
   cursor: "👁️", auto;
-  background: $color-green-glint;
+  background: $color-fiddle-leaf-fig;
   color: $color-elite-teal;
   height: max(100%, 100dvh);
   width: max(2400px, 100dvw);
@@ -51,6 +51,7 @@ body {
   // NOTE: keep this in sync w PlantWrapper for random generation
   width: 2400px;
   height: 1400px;
+  box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
 }
 
 main {
@@ -62,6 +63,12 @@ hgroup {
   margin-top: 2em;
   top: 0;
   width: calc(min(100%, 100vw - 4em, 750px));
+
+  h1,
+  p {
+    display: table;
+    backdrop-filter: blur(6px);
+  }
 }
 
 hgroup,
@@ -79,7 +86,11 @@ footer {
 footer {
   position: fixed;
   bottom: 4%;
-  backdrop-filter: blur(4.2px);
+  span,
+  p {
+    backdrop-filter: blur(4.2px);
+  }
+
   p {
     margin: 0.25em 0;
   }
