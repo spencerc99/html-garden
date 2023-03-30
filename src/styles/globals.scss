@@ -47,11 +47,9 @@ body {
 
 #garden {
   position: relative;
-  background: url("/garden-background.png");
   // NOTE: keep this in sync w PlantWrapper for random generation
   width: 2400px;
   height: 1400px;
-  box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
 }
 
 main {
@@ -260,7 +258,6 @@ kbd {
         td {
           padding: 1em;
           &:last-child {
-            background: $color-ghoul;
             width: 280px;
           }
           border: 1px solid black;
