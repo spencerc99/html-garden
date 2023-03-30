@@ -69,8 +69,25 @@ const DefaultGetActivePlants = () => {
 
   // add some entropy to the number of active plants
   return activePlants.map((day) => {
-    // return 4 - (4 - Math.log10(day)) * Math.exp(-0.25 * day);
-    return Math.min(Math.floor(Math.log(day) / Math.log(2)), 5);
+    // return Math.min(Math.floor(Math.log(day) / Math.log(2)), 5);
+    if (day <= 2) {
+      return 0;
+    }
+    if (day < 5) {
+      return 1;
+    }
+    if (day <= 11) {
+      return 2;
+    }
+    if (day <= 17) {
+      return 3;
+    }
+    if (day <= 24) {
+      return 4;
+    }
+    if (day >= 27) {
+      return 5;
+    }
   });
 };
 
