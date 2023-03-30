@@ -28,8 +28,7 @@ export default function Guide() {
         <td>
           {GenusName} {type}
         </td>
-        {/* TODO: fix */}
-        <td>{info.season}</td>
+        <td>{info.whereGrowsDescription}</td>
         <td>
           {seenBefore ? (
             <HtmlPlant
@@ -58,7 +57,7 @@ export default function Guide() {
         <thead>
           <tr>
             <th>Species</th>
-            <th>Season</th>
+            <th>Where Found</th>
             <th>Sample</th>
           </tr>
         </thead>

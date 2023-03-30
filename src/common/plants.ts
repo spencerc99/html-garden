@@ -53,8 +53,8 @@ export interface HtmlPlantInfo {
     limitMaxElements?: boolean
   ) => HtmlLSystem;
   frameRate?: number;
+  whereGrowsDescription: string;
   // returns an array corresponding to the number of active plants with a number representing how many iterations to render
-  season: string;
   activePlants: () => number[];
 }
 
@@ -94,7 +94,8 @@ const DefaultGetActivePlants = () => {
 export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Linchinus]: {
     type: HtmlPlantType.Linchinus,
-    season: "all the time, everywhere",
+    whereGrowsDescription:
+      "all the time, everywhere, in the corners and cracks of websites",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -143,7 +144,8 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Botonus]: {
     type: HtmlPlantType.Botonus,
-    season: "when fun is in the air",
+    whereGrowsDescription:
+      "when fun is in the air and play is to be had and desire yearns for effect",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -189,7 +191,8 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Datum]: {
     type: HtmlPlantType.Datum,
-    season: "whenever the earth has energy to give",
+    whereGrowsDescription:
+      "whenever the earth has energy to receive the energy seeping off its inhabitants",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -219,7 +222,8 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Chrono]: {
     type: HtmlPlantType.Chrono,
-    season: "",
+    whereGrowsDescription:
+      "where seconds grow up and minutes learn of the world and hours go to rest",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -249,7 +253,8 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Separatus]: {
     type: HtmlPlantType.Separatus,
-    season: "separating",
+    whereGrowsDescription:
+      "where words grow like weeds beyond maintenance and meaning, when division is natural",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -278,7 +283,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Lexus]: {
     type: HtmlPlantType.Lexus,
-    season: "",
+    whereGrowsDescription: "in dark places under moonlight, when bright colors contrast with grey backgrounds",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -311,7 +316,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Espandre]: {
     type: HtmlPlantType.Espandre,
-    season: "",
+    whereGrowsDescription: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -330,7 +335,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Basis]: {
     type: HtmlPlantType.Basis,
-    season: "",
+    whereGrowsDescription: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -349,7 +354,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Pictus]: {
     type: HtmlPlantType.Pictus,
-    season: "",
+    whereGrowsDescription: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -368,7 +373,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Porros]: {
     type: HtmlPlantType.Porros,
-    season: "",
+    whereGrowsDescription: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,
@@ -387,7 +392,7 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Liste]: {
     type: HtmlPlantType.Liste,
-    season: "",
+    whereGrowsDescription: "",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,

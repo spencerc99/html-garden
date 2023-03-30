@@ -245,7 +245,7 @@ kbd {
   .fieldGuideTable {
     width: fit-content;
     max-width: 800px;
-    overflow-x: auto;
+    overflow: hidden;
     tbody {
       tr {
         height: 250px;
