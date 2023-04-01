@@ -50,8 +50,7 @@ export default function Guide() {
       <h1>The HTML Leaf Book</h1>
       <p>
         as you see specimen in the wild, this field guide will automatically
-        fill in with samples. Visit again on different days to see the garden
-        grow.
+        fill in with samples.
       </p>
       <table className="fieldGuideTable">
         <thead>

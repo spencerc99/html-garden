@@ -47,16 +47,16 @@ export default function Home() {
       <hgroup>
         <h1>html garden</h1>
         <p>
-          we are in {seasonName}. {numSpeciesBlooming}/{totalSpecies} species
-          are blooming. the garden has been growing for {GardenGrowingDays}{" "}
-          days.
-        </p>
-        <p>
           Today, on {new Date().toLocaleDateString()}, {GenusNamePlural}{" "}
           {joinWithAnd(
             currentSpecies.map((c) => HtmlPlantTypeToSpecies[c].type)
           )}{" "}
-          {currentSpecies.length > 1 ? "are" : "is"} seeding.
+          ({numSpeciesBlooming}/{totalSpecies} species){" "}
+          {currentSpecies.length > 1 ? "are" : "is"} blooming.
+        </p>
+        <p>
+          we are in {seasonName}. the garden has been growing for{" "}
+          {GardenGrowingDays} days.
         </p>
       </hgroup>
       <main>
