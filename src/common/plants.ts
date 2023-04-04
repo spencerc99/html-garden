@@ -1,5 +1,5 @@
 import type p5Type from "p5";
-import { GardenGrowingDays } from "../pages";
+import { allDaysGenerator, GardenGrowingDays } from "../pages";
 import { DayRandomGenerator, HtmlLSystem } from "../plant_factory";
 export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
@@ -65,7 +65,9 @@ const DefaultGetActivePlants = () => {
   const activePlants: number[] = Array.from(
     { length: GardenGrowingDays },
     (_, i) => GardenGrowingDays - i
-  ).flatMap((day) => (DayRandomGenerator() > 0.5 ? day : []));
+  ).flatMap((day) =>
+    allDaysGenerator[(day - GardenGrowingDays) * -1]() > 0.25 ? day : []
+  );
 
   // add some entropy to the number of active plants
   return activePlants.map((day) => {
@@ -76,16 +78,16 @@ const DefaultGetActivePlants = () => {
     if (day < 5) {
       return 1;
     }
-    if (day <= 11) {
+    if (day <= 15) {
       return 2;
     }
-    if (day <= 17) {
+    if (day <= 26) {
       return 3;
     }
-    if (day <= 24) {
+    if (day <= 45) {
       return 4;
     }
-    if (day >= 27) {
+    if (day >= 46) {
       return 5;
     }
   });
@@ -185,7 +187,6 @@ export const HtmlPlantTypeToSpecies = {
         .addRule("G", "G[-G]M[+F]"),
     frameRate: FrameRate,
     activePlants: () => {
-      console.log(DefaultGetActivePlants());
       return DefaultGetActivePlants();
     },
   },
@@ -283,7 +284,8 @@ export const HtmlPlantTypeToSpecies = {
   },
   [HtmlPlantType.Lexus]: {
     type: HtmlPlantType.Lexus,
-    whereGrowsDescription: "in dark places under moonlight, when bright colors contrast with grey backgrounds",
+    whereGrowsDescription:
+      "in dark places under moonlight, when bright colors contrast with grey backgrounds",
     getLSystem: (
       p5: p5Type,
       parentSelector: string,

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
+import seedrandom from "seedrandom";
 import {
   currentSeason,
   GenusName,
@@ -11,9 +12,20 @@ import {
 import { useStickyState } from "../common/utils";
 import { Garden } from "../components/Garden";
 
-const StartDate = new Date("2023-03-15");
+export const StartDate = new Date("2023-03-15");
 export const GardenGrowingDays = Math.floor(
-  (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
+  (new Date().getTime() + 24 * 60 * 60 * 1000 - StartDate.getTime()) /
+    1000 /
+    60 /
+    60 /
+    24
+);
+export const allDaysGenerator = Array.from(
+  { length: GardenGrowingDays },
+  (_, i) =>
+    seedrandom(
+      new Date(StartDate.getTime() + i * 24 * 60 * 60 * 1000).toUTCString()
+    )
 );
 
 function joinWithAnd(arr: string[]) {

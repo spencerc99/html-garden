@@ -52,6 +52,10 @@ export default function Guide() {
         As you see specimen in the wild, this field guide will automatically
         fill with samples. Visit on different days to find all the species.
       </p>
+      {/* <details>
+        <summary>about</summary>
+        hello
+      </details> */}
       <p>
         This garden was planted by{" "}
         <a href="https://www.spencerchang.me/">Spencer Chang</a> for the 2nd

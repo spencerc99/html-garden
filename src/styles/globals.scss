@@ -150,18 +150,15 @@ footer {
 // blink text infinite
 @keyframes blink {
   0% {
-    color: #6f705f;
     opacity: 0;
   }
   10% {
     opacity: 1;
-    color: #0e0f06;
   }
 }
 
 time {
   font-size: 0.5em;
-  animation: blink 2s infinite linear;
   transition: opacity;
   color: #0e0f06;
 
@@ -181,12 +178,14 @@ time {
   }
   &:nth-of-type(7n) {
     animation-delay: #{(random(5) / 2) + 1}s;
+    animation: blink 2s infinite linear;
   }
   &:nth-of-type(11n) {
     animation-delay: #{(random(5) / 2) + 1}s;
   }
   &:nth-of-type(13n) {
     animation-delay: #{(random(5) / 2) + 1}s;
+    animation: blink 2s infinite linear;
   }
 }
 
