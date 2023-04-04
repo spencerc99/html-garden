@@ -49,8 +49,13 @@ export default function Guide() {
     <div className="fieldGuide">
       <h1>The HTML Leaf Book</h1>
       <p>
-        as you see specimen in the wild, this field guide will automatically
-        fill in with samples.
+        As you see specimen in the wild, this field guide will automatically
+        fill with samples. Visit on different days to find all the species.
+      </p>
+      <p>
+        This garden was planted by{" "}
+        <a href="https://www.spencerchang.me/">Spencer Chang</a> for the 2nd
+        issue of <a href="http://html.review/">thehtml.review</a>
       </p>
       <table className="fieldGuideTable">
         <thead>
