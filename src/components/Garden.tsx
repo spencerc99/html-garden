@@ -7,6 +7,13 @@ import {
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
 import { Day } from "../plant_factory";
+import { StartDate } from "../pages";
+
+function daysGrownToDate(daysGrown: number): Date {
+  const date = new Date();
+  date.setDate(StartDate.getDate() + daysGrown);
+  return date;
+}
 
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
@@ -57,7 +64,11 @@ function PlantWrapper({
   daysGrown: number;
   idx: number;
 }) {
-  const plantId = useMemo(() => `${plantType}-${idx}-${Day}`, [idx, plantType]);
+  const plantId = useMemo(
+    () =>
+      `${plantType}-${idx}-${daysGrownToDate(daysGrown).toLocaleDateString()}`,
+    [daysGrown, idx, plantType]
+  );
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
   // const randomGenerator = DayRandomGenerator;
   // const numPlants = Object.keys(HtmlPlantType).length;
