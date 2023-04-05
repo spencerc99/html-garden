@@ -59,35 +59,33 @@ export default function Guide() {
         <p>
           This garden was planted by{" "}
           <a href="https://www.spencerchang.me/">Spencer Chang</a> for the 2nd
-          issue of <a href="http://html.review/">thehtml.review</a>
+          issue of <a href="http://html.review/">thehtml.review</a> in Spring
+          2023.
         </p>
         <p>
           <em>html garden</em> is an attempt to imagine what a &quot;seasonal
           website&quot; looks like, one that rewards visitors for coming back
-          and&nbsp;<em>noticing</em>, an act very different from the normal way
-          change takes effect via large platforms forcing an interface change. I
-          wanted to give the power of agency back to the viewer, where the
-          website subtly changes and grows day to day, but the viewer&apos;s
-          agency is always maintained.
+          and&nbsp;<em>noticing</em>, a very different and radical act from the
+          way large platforms force interface changes. Visitors are encouraged
+          to take a stroll through and use their inherent browser mechanisms to
+          zoom in and take a closer peek at the plants that call to them.
         </p>
         <p>
           <em>html garden</em> is composed of digitally-native plants, formed
           from HTML elements that simulate the growth patterns of real plants
           (backed by a grammar that means you could create your own plant!).
-          Visiting repeatedly will reward you with the sights of growth in each
+          Returning repeatedly will reward you with the sights of growth in each
           plant along with budding offspring, and you might just find new
           species as you come to become a regular at this neighborhood garden.
+          The slow growth of the website day-to-day invites returning to the
+          same place on the internet and bearing witness to its change.
         </p>
         <p>
           This was such a joy (and at times an absolute struggle) to create,
           play with, and learn from, from not only creating a poetic website,
           with all the interactions and details that delight, but also creating
-          a system on top of{" "}
-          <a href="https://p5js.org/" aria-label="https://p5js.org/">
-            p5js
-          </a>{" "}
-          to &quot;draw&quot; with html elements rather than lines using the
-          logic of l-systems.
+          a system on top of p5js to &quot;draw&quot; with html elements rather
+          than lines using the logic of l-systems.
         </p>
         <p>
           This project wouldn&apos;t have come into being without the
@@ -102,7 +100,7 @@ export default function Guide() {
           <a aria-label="https://lsystem.club/" href="https://lsystem.club/">
             l-systems
           </a>
-          , and the open-source p5js community.
+          , and the open-source <a href="https://p5js.org/">p5js</a> community.
         </p>
       </details>
       <br />
