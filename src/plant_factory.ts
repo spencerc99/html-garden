@@ -217,6 +217,7 @@ export class HtmlLSystem extends LSystemBase {
   renderVertically: boolean;
   drawingStack: Array<Instruction>;
   maxElements: number;
+  markFinishedGrowing?: () => void;
 
   constructor(
     props: LSystemInit & {
@@ -226,6 +227,7 @@ export class HtmlLSystem extends LSystemBase {
       useStrictWidth?: boolean;
       renderVertically?: boolean;
       limitMaxElements?: boolean;
+      markFinishedGrowing?: () => void;
     }
   ) {
     super(props);
@@ -240,6 +242,7 @@ export class HtmlLSystem extends LSystemBase {
     this.maxElements = props.limitMaxElements
       ? Math.max(Math.pow(3, daysGrown + 2), 9)
       : Infinity;
+    this.markFinishedGrowing = props.markFinishedGrowing;
 
     this.tagInfos = props.tagInfos;
     this.parentSelector = props.parentSelector;
@@ -277,6 +280,7 @@ export class HtmlLSystem extends LSystemBase {
       this.elementsDrawn >= this.maxElements
     ) {
       this.p5.noLoop();
+      this.markFinishedGrowing?.();
       return;
     }
 

@@ -34,3 +34,14 @@ export function useStickyState<T>(
 
   return [value, setValue];
 }
+
+// create new array that is a shuffled version of the
+// input array
+export function shuffleArray<T = any>(arr: T[], randGen?: () => number): T[] {
+  const newArr = [...arr];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor((randGen ? randGen() : Math.random()) * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}

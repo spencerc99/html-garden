@@ -102,7 +102,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) =>
       new HtmlLSystem({
         p5,
@@ -112,6 +113,7 @@ export const HtmlPlantTypeToSpecies = {
         lengthMod: 1,
         iterations: daysGrown,
         limitMaxElements,
+        markFinishedGrowing,
         parentSelector,
         tagInfos: [
           {
@@ -152,7 +154,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) =>
       new HtmlLSystem({
         p5,
@@ -162,6 +165,7 @@ export const HtmlPlantTypeToSpecies = {
         lengthMod: 1,
         iterations: daysGrown,
         limitMaxElements,
+        markFinishedGrowing,
         tagInfos: [
           {
             tag: "button",
@@ -198,7 +202,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) =>
       new HtmlLSystem({
         p5,
@@ -208,6 +213,7 @@ export const HtmlPlantTypeToSpecies = {
         lengthMod: 0.85,
         iterations: daysGrown,
         limitMaxElements,
+        markFinishedGrowing,
         tagInfos: [{ tag: "input", extraProps: { value: "input" } }],
         parentSelector,
         useStrictDimensions: true,
@@ -229,7 +235,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       return new HtmlLSystem({
         p5,
@@ -238,6 +245,7 @@ export const HtmlPlantTypeToSpecies = {
         lineLength: 30,
         lengthMod: 1,
         limitMaxElements,
+        markFinishedGrowing,
         iterations: daysGrown,
         tagInfos: [
           { tag: "time", innerValue: time, extraProps: { datetime: time } },
@@ -260,7 +268,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       return new HtmlLSystem({
         p5,
@@ -270,7 +279,8 @@ export const HtmlPlantTypeToSpecies = {
         lengthMod: 1,
         iterations: daysGrown,
         limitMaxElements,
-        tagInfos: [{ tag: "hr", innerValue: "" }],
+        markFinishedGrowing,
+        tagInfos: [{ tag: "hr", innerValue: "hr", extraProps: { alt: "hr" } }],
         parentSelector,
         useStrictWidth: true,
       })
@@ -290,7 +300,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       return new HtmlLSystem({
         p5,
@@ -300,6 +311,7 @@ export const HtmlPlantTypeToSpecies = {
         lengthMod: 1,
         iterations: daysGrown,
         limitMaxElements,
+        markFinishedGrowing,
         tagInfos: [
           { tag: "code" },
           { tag: "kbd", innerValue: "Cmd" },
@@ -323,7 +335,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       //   @ts-ignore
       return new HtmlLSystem({ p5 });
@@ -342,7 +355,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       //   @ts-ignore
       return new HtmlLSystem({ p5 });
@@ -361,7 +375,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       //   @ts-ignore
       return new HtmlLSystem({ p5 });
@@ -380,7 +395,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       //   @ts-ignore
       return new HtmlLSystem({ p5 });
@@ -399,7 +415,8 @@ export const HtmlPlantTypeToSpecies = {
       p5: p5Type,
       parentSelector: string,
       daysGrown: number,
-      limitMaxElements?: boolean
+      limitMaxElements?: boolean,
+      markFinishedGrowing?: () => void
     ) => {
       //   @ts-ignore
       return new HtmlLSystem({ p5 });

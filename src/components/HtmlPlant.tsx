@@ -15,6 +15,7 @@ interface Props {
   daysGrown: number;
   style?: CSSProperties;
   limitMaxElements?: boolean;
+  markFinishedGrowing?: () => void;
 }
 
 export function HtmlPlant({
@@ -23,6 +24,7 @@ export function HtmlPlant({
   daysGrown,
   style = {},
   limitMaxElements,
+  markFinishedGrowing,
 }: Props) {
   const plantId = useMemo(() => `${type}-${idx}`, [idx, type]);
 
@@ -39,7 +41,8 @@ export function HtmlPlant({
       p5,
       `.${plantId}`,
       daysGrown,
-      limitMaxElements
+      limitMaxElements,
+      markFinishedGrowing
     );
     system.current = newSystem;
     newSystem.run();

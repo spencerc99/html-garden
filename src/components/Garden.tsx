@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HtmlPlant } from "./HtmlPlant";
 import seedrandom from "seedrandom";
 import {
@@ -6,8 +6,11 @@ import {
   GenusName,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
-import { Day } from "../plant_factory";
 import { StartDate } from "../pages";
+import { shuffleArray } from "../common/utils";
+
+const MaxPlantsToDrawAtOnce = 70;
+const ServerClientRandomGenerator = seedrandom(process.env.NODE_ENV);
 
 function daysGrownToDate(daysGrown: number): Date {
   const date = new Date();
@@ -17,10 +20,41 @@ function daysGrownToDate(daysGrown: number): Date {
 
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
+  const numPlants = useMemo(
+    () =>
+      Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
+        species.activePlants()
+      ).length,
+    []
+  );
+  useEffect(() => {
+    console.log(`${numPlants} active plants in the garden.`);
+  }, [numPlants]);
   useEffect(() => {
     const headerHeight = document.querySelector("hgroup").clientHeight;
     ref.current.style.marginTop = `${headerHeight + 20 + 32}px`;
+    setPlantsToRender(
+      shuffleArray(
+        Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
+          species
+            .activePlants()
+            .map((daysGrown, idx) => (
+              <PlantWrapper
+                key={`${species.type}-${idx}`}
+                idx={idx}
+                plantType={species.type}
+                daysGrown={daysGrown}
+                markFinishedGrowing={incrementPlantsEndIdx}
+              />
+            ))
+        ),
+        ServerClientRandomGenerator
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [plantsToRender, setPlantsToRender] = useState<any[]>([]);
 
   // TODO: add threshold for each to "sprout" new plant
   // TODO: figure out seasons for each, some modulo based on the date or intervals where it's in season? or maybe like moon phases where it grows to a peak and then shrinks?
@@ -30,25 +64,21 @@ export function Garden() {
   // or can you just adopt one (fake this by choosing a random one)
   // maybe by visiting the site many times, you earn the right to plant one.
 
+  const [plantsEndIdx, setPlantsEndIdx] = useState(MaxPlantsToDrawAtOnce);
+  const incrementPlantsEndIdx = useCallback(() => {
+    // console.log(`incrementing ${plantsEndIdx} ${numPlants}`);
+    if (plantsEndIdx >= numPlants) {
+      return;
+    }
+    setPlantsEndIdx((endIdx) => endIdx + 1);
+  }, [numPlants, plantsEndIdx]);
+
   // TODO: big season clock in the top right that simulates a real clock or day/night or moon, windchime? tools for watering? maybe make it out of datetime in a circle + a hand using progress bars or separatus
-  const plants = useMemo(() => {
-    return Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
-      species
-        .activePlants()
-        .map((daysGrown, idx) => (
-          <PlantWrapper
-            key={`${species.type}-${idx}`}
-            idx={idx}
-            plantType={species.type}
-            daysGrown={daysGrown}
-          />
-        ))
-    );
-  }, []);
+  // console.log(`${plantsEndIdx} plants rendered in the garden.`);
 
   return (
     <div id="garden" ref={ref}>
-      {plants}
+      {plantsToRender.slice(0, plantsEndIdx)}
     </div>
   );
 }
@@ -59,10 +89,12 @@ function PlantWrapper({
   plantType,
   daysGrown,
   idx = 0,
+  markFinishedGrowing,
 }: {
   plantType: HtmlPlantType;
   daysGrown: number;
   idx: number;
+  markFinishedGrowing: () => void;
 }) {
   const plantId = useMemo(
     () =>
@@ -70,6 +102,7 @@ function PlantWrapper({
     [daysGrown, idx, plantType]
   );
   const randomGenerator = useMemo(() => seedrandom(plantId), [plantId]);
+  // To make them appear in quadrants
   // const randomGenerator = DayRandomGenerator;
   // const numPlants = Object.keys(HtmlPlantType).length;
   // const typeIdx = Object.keys(HtmlPlantType).indexOf(plantType);
@@ -85,6 +118,7 @@ function PlantWrapper({
   //   () => `${randomGenerator() * 200 + basisLeft}px`,
   //   [basisLeft, randomGenerator]
   // );
+
   const bottom = useMemo(
     () =>
       `${(Math.floor(randomGenerator() * 50) * (GardenHeight - 100)) / 50}px`,
@@ -121,6 +155,7 @@ function PlantWrapper({
         style={{
           transform,
         }}
+        markFinishedGrowing={markFinishedGrowing}
       />
       <label>
         {GenusName} {plantType}
