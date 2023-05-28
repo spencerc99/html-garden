@@ -70,7 +70,7 @@ export default function Home() {
         <p>
           we are in {seasonName}.{" "}
           {hasLoaded
-            ? `the garden has been growing for{" "}
+            ? `the garden has been growing for
           ${GardenGrowingDays} days.`
             : null}
         </p>
