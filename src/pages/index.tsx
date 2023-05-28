@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import seedrandom from "seedrandom";
 import {
   currentSeason,
@@ -42,10 +42,13 @@ export default function Home() {
   const numSpeciesBlooming = currentSpecies.length;
   const [seenPlants, setSeenPlants] = useStickyState("seenPlants", []);
 
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   useEffect(() => {
     if (currentSpecies.filter((c) => !seenPlants.includes(c)).length) {
       setSeenPlants(Array.from(new Set([...seenPlants, ...currentSpecies])));
     }
+    setHasLoaded(true);
   }, [currentSpecies]);
 
   return (
@@ -65,8 +68,11 @@ export default function Home() {
           {currentSpecies.length > 1 ? "are" : "is"} blooming.
         </p>
         <p>
-          we are in {seasonName}. the garden has been growing for{" "}
-          {GardenGrowingDays} days.
+          we are in {seasonName}.{" "}
+          {hasLoaded
+            ? `the garden has been growing for{" "}
+          ${GardenGrowingDays} days.`
+            : null}
         </p>
       </hgroup>
       <main>
