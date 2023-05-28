@@ -9,7 +9,7 @@ import {
 import { StartDate } from "../pages";
 import { shuffleArray } from "../common/utils";
 
-const MaxPlantsToDrawAtOnce = 70;
+const MaxPlantsToDrawAtOnce = 40;
 const ServerClientRandomGenerator = seedrandom(process.env.NODE_ENV);
 
 function daysGrownToDate(daysGrown: number): Date {
@@ -163,3 +163,5 @@ function PlantWrapper({
     </div>
   );
 }
+
+export default Garden;

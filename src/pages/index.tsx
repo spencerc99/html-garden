@@ -10,7 +10,9 @@ import {
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
 import { useStickyState } from "../common/utils";
-import { Garden } from "../components/Garden";
+import dynamic from "next/dynamic";
+
+const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
 export const StartDate = new Date("2023-03-15");
 export const GardenGrowingDays = Math.floor(
