@@ -280,7 +280,7 @@ export const HtmlPlantTypeToSpecies = {
         iterations: daysGrown,
         limitMaxElements,
         markFinishedGrowing,
-        tagInfos: [{ tag: "hr", innerValue: "hr", extraProps: { alt: "hr" } }],
+        tagInfos: [{ tag: "hr" }],
         parentSelector,
         useStrictWidth: true,
       })
