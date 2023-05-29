@@ -3,7 +3,7 @@ import { allDaysGenerator, GardenGrowingDays } from "../pages";
 import { DayRandomGenerator, HtmlLSystem } from "../plant_factory";
 export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
-export const FrameRate = 30;
+export const FrameRate = 15;
 
 const referenceDate = new Date();
 const dayOfYear = Math.floor(
