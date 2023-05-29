@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef } from "react";
+import { CSSProperties, useEffect, useMemo, useRef } from "react";
 import { IS_DEBUGGING } from "../plant_factory";
 import type p5Type from "p5";
 import dynamic from "next/dynamic";
@@ -47,7 +47,10 @@ export function HtmlPlant({
     system.current = newSystem;
     newSystem.run();
     p5.noCanvas();
-    document.querySelectorAll("canvas").forEach((e) => e.remove());
+    document.querySelectorAll("canvas").forEach((e) => {
+      e.height = 0;
+      e.width = 0;
+    });
   };
 
   // The sketch draw method
@@ -60,6 +63,14 @@ export function HtmlPlant({
     system.current.draw();
     p5.pop();
   };
+
+  useEffect(() => {
+    return () =>
+      document.querySelectorAll("canvas").forEach((e) => {
+        e.height = 0;
+        e.width = 0;
+      });
+  });
 
   return (
     <div className={`${plantId} htmlPlant`} style={style}>
