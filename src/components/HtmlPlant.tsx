@@ -47,6 +47,8 @@ export function HtmlPlant({
     system.current = newSystem;
     newSystem.run();
     p5.noCanvas();
+    // see this issue for
+    // https://stackoverflow.com/questions/52532614/total-canvas-memory-use-exceeds-the-maximum-limit-safari-12#comment102082116_52586606
     document.querySelectorAll("canvas").forEach((e) => {
       e.height = 0;
       e.width = 0;
