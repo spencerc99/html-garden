@@ -15,7 +15,7 @@ body {
 }
 
 body {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='44' height='53' viewport='0 0 100 100' style='fill:black;font-size:26px;'><text y='50%'>🚿</text></svg>")
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='44' height='53' viewport='0 0 100 100' style='fill:black;font-size:26px;'><text y='40%'>🚿</text></svg>")
       16 0,
     auto; /*!emojicursor.app*/
   background: $color-fiddle-leaf-fig;
@@ -269,5 +269,21 @@ kbd {
         }
       }
     }
+  }
+}
+
+.guideContainer {
+  position: absolute;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  top: 0px;
+  background: #7d9158e7;
+  transition: height 0.5s ease-in-out;
+  overflow-y: auto;
+
+  &.hidden {
+    display: none;
+    height: 0;
   }
 }

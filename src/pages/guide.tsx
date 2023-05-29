@@ -118,9 +118,20 @@ export default function Guide() {
           )}
         </tbody>
       </table>
-      <Link href="/">
+      <button
+        onClick={() => {
+          if (window.location.href.includes("guide")) {
+            window.location.href = "/";
+          } else {
+            document.querySelector(".guideContainer").classList.add("hidden");
+          }
+        }}
+      >
         <span className="pageLink">🌿</span>
-      </Link>
+      </button>
+      {/* <Link href="/">
+        <span className="pageLink">🌿</span>
+      </Link> */}
     </div>
   );
 }

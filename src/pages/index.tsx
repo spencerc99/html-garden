@@ -11,6 +11,7 @@ import {
 } from "../common/plants";
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
+import Guide from "./guide";
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
@@ -53,6 +54,10 @@ export default function Home() {
     setHasLoaded(true);
   }, [currentSpecies]);
 
+  function openGuide() {
+    document.querySelector(".guideContainer").classList.remove("hidden");
+  }
+
   return (
     <>
       <Head>
@@ -86,13 +91,18 @@ export default function Home() {
         </span>
         <p>🎐 come visit again soon</p>
       </footer>
-      <Link href="/guide">
+
+      <div className="guideContainer hidden">
+        <Guide />
+      </div>
+
+      <button onClick={openGuide}>
         <img
           className="pageLink"
           src="./the-html-leaf-book.png"
           alt={`parody image of Ida Geary's "The Leaf Book"`}
         ></img>
-      </Link>
+      </button>
     </>
   );
 }
