@@ -275,11 +275,11 @@ kbd {
 .guideContainer {
   position: absolute;
   z-index: 100;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   top: 0px;
   background: #7d9158e7;
-  transition: height 0.5s ease-in-out;
+  transition: height 1s ease-in-out;
   overflow-y: auto;
 
   &.hidden {
