@@ -120,14 +120,7 @@ export const HtmlPlantTypeToSpecies = {
             tag: "a",
             innerValue: "link",
             extraProps: {
-              href: "/guide",
-            },
-          },
-          {
-            tag: "a",
-            innerValue: "rgy",
-            extraProps: {
-              href: "http://html.energy/",
+              href: "/",
             },
           },
           {
