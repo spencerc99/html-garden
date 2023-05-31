@@ -55,7 +55,8 @@ body {
 }
 
 main {
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 hgroup {
@@ -164,29 +165,29 @@ time {
 
   // https://codepen.io/dan10gc/post/use-the-random-sass-function-to-create-unique-animations
   // https://www.the215guys.com/learning/nth-child-cicada-principle/
-  &:nth-of-type(n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-  }
-  &:nth-of-type(2n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-  }
-  &:nth-of-type(3n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-  }
-  &:nth-of-type(5n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-  }
-  &:nth-of-type(7n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-    animation: blink 2s infinite linear;
-  }
-  &:nth-of-type(11n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-  }
-  &:nth-of-type(13n) {
-    animation-delay: #{(random(5) / 2) + 1}s;
-    animation: blink 2s infinite linear;
-  }
+  // &:nth-of-type(n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  // }
+  // &:nth-of-type(2n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  // }
+  // &:nth-of-type(3n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  // }
+  // &:nth-of-type(5n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  // }
+  // &:nth-of-type(7n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  //   animation: blink 2s infinite linear;
+  // }
+  // &:nth-of-type(11n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  // }
+  // &:nth-of-type(13n) {
+  //   animation-delay: #{(random(5) / 2) + 1}s;
+  //   animation: blink 2s infinite linear;
+  // }
 }
 
 hr {
