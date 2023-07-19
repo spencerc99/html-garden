@@ -12,7 +12,8 @@ export default function Document() {
         <script
           defer
           data-domain="htmlgarden.spencerchang.me"
-          src="https://plausible.io/js/script.js"
+          data-api="https://sharingan.spencerc99.workers.dev/genjutsu/event"
+          src="https://sharingan.spencerc99.workers.dev/genjutsu/script.js"
         ></script>
       </Head>
       <body>
