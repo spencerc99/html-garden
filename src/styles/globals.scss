@@ -288,3 +288,15 @@ kbd {
     height: 0;
   }
 }
+
+.timelapse {
+  padding: 2em;
+  margin: 0 auto;
+}
+
+.timelapse-video {
+  max-width: 1000px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
