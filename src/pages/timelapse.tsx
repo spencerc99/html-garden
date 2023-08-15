@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Timelapse() {
@@ -14,7 +15,7 @@ export default function Timelapse() {
         This is a timelapse video taken in May 2023 of the garden to create a
         static representation of the garden that is digestible in a single take.
         I recommend experiencing it for yourself in the{" "}
-        <a href="/">live garden</a>.
+        <Link href="/">live garden</Link>.
       </p>
       <p>
         This video was composed and edited by Spencer Chang, featuring sounds
@@ -38,9 +39,9 @@ export default function Timelapse() {
         className="timelapse-video"
         src="https://www.youtube.com/embed/Fa28RSaClDk"
         title="YouTube video player"
-        frameborder="0"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
     </div>
   );

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useEffect } from "react";
 import {
   GenusName,
@@ -129,9 +128,6 @@ export default function Guide() {
       >
         <span className="pageLink">🌿</span>
       </button>
-      {/* <Link href="/">
-        <span className="pageLink">🌿</span>
-      </Link> */}
     </div>
   );
 }
