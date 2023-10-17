@@ -1,4 +1,6 @@
 import { Html, Main, Head, NextScript } from "next/document";
+import { Marquee } from "../components/Marquee";
+import Link from "next/link";
 export default function Document() {
   return (
     <Html data-theme="cmyk">
@@ -17,6 +19,19 @@ export default function Document() {
         ></script>
       </Head>
       <body>
+        <Marquee
+          items={[
+            <>
+              <Link href="/timelapse">timelapse</Link> now showing at the{" "}
+              <a href="https://deyoungopen2023.artcall.org/submissions/qr-view/424024">
+                de Young Museum
+              </a>{" "}
+              through January 2024
+            </>,
+            <>come back in ❄️ for a new planting</>,
+          ]}
+          separator={" 🌑 "}
+        ></Marquee>
         <Main />
         <NextScript />
       </body>

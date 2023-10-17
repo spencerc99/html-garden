@@ -300,3 +300,55 @@ kbd {
   aspect-ratio: 16 / 9;
   height: auto;
 }
+
+.marquee {
+  font-size: 0.8em;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  z-index: 999;
+  padding: 8px 0;
+  background: rgb(241 215 166 / 80%);
+}
+
+.marquee > .marqueeContent {
+  display: inline-block;
+  will-change: transform;
+  animation: marquee 17s linear infinite;
+
+  .date {
+    &:hover {
+      .epoch {
+        display: none;
+      }
+
+      .timestamp {
+        display: inherit;
+      }
+    }
+
+    .timestamp {
+      display: none;
+    }
+
+    cursor: zoom-in;
+  }
+}
+
+.marquee .marqueeContent:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0%, 0);
+  }
+  100% {
+    transform: translate(-11%, 0);
+  }
+}
