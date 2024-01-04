@@ -13,7 +13,7 @@ export default function Document() {
         <link rel="apple-touch-icon" href="./apple-touch-icon.png"></link>
         <script
           defer
-          data-domain="htmlgarden.spencerchang.me"
+          data-domain="htmls.garden"
           data-api="https://sharingan.spencerc99.workers.dev/genjutsu/event"
           src="https://sharingan.spencerc99.workers.dev/genjutsu/script.js"
         ></script>
