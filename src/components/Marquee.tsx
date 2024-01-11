@@ -1,6 +1,6 @@
 import React from "react";
 
-function jsxJoin(
+export function jsxJoin(
   items: React.ReactNode[],
   separator: React.ReactNode
 ): React.ReactNode[] {
@@ -24,7 +24,7 @@ export function Marquee({
     <div className="marquee">
       <div className="marqueeContent">
         {jsxJoin(
-          [...items, ...items].map((item, idx) => (
+          [...items, ...items, ...items].map((item, idx) => (
             <span key={idx}>{item}</span>
           )),
           separator
