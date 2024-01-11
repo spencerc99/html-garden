@@ -1,6 +1,6 @@
 import React from "react";
 
-function jsxJoin(
+export function jsxJoin(
   items: React.ReactNode[],
   separator: React.ReactNode
 ): React.ReactNode[] {
