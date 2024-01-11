@@ -7,6 +7,7 @@ import {
 import { useStickyState } from "../common/utils";
 import { HtmlPlant } from "../components/HtmlPlant";
 import "../styles/guide.module.scss";
+import { jsxJoin } from "../components/Marquee";
 
 export default function Guide() {
   const [seenPlants] = useStickyState("seenPlants", []);
@@ -28,6 +29,19 @@ export default function Guide() {
           {GenusName} {type}
         </td>
         <td>{info.whereGrowsDescription}</td>
+        <td>
+          {jsxJoin(
+            info.htmlTags.map((tag) => (
+              <a
+                href={`https://developer.mozilla.org/en-US/docs/Web/HTML/Element/${tag}`}
+                key={tag}
+              >
+                {tag}
+              </a>
+            )),
+            ", "
+          )}
+        </td>
         <td>
           {seenBefore ? (
             <HtmlPlant
@@ -107,7 +121,8 @@ export default function Guide() {
         <thead>
           <tr>
             <th>Species</th>
-            <th>Where Found</th>
+            <th>Location</th>
+            <th>HTML Tags</th>
             <th>Sample</th>
           </tr>
         </thead>

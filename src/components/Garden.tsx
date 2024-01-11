@@ -7,7 +7,7 @@ import {
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
 import { StartDate } from "../pages";
-import { shuffleArray } from "../common/utils";
+import { isDevelopment, shuffleArray } from "../common/utils";
 
 const MaxPlantsToDrawAtOnce = 40;
 const ServerClientRandomGenerator = seedrandom(process.env.NODE_ENV);
@@ -20,6 +20,10 @@ function daysGrownToDate(daysGrown: number): Date {
 
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
+  const [includedPlants, setIncludedPlants] = useState<Set<HtmlPlantType>>(
+    new Set(Object.values(HtmlPlantType))
+    // new Set([HtmlPlantType.Pictus])
+  );
   const numPlants = useMemo(
     () =>
       Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
@@ -35,19 +39,21 @@ export function Garden() {
     ref.current.style.marginTop = `${headerHeight + 20 + 32}px`;
     setPlantsToRender(
       shuffleArray(
-        Object.values(HtmlPlantTypeToSpecies).flatMap((species) =>
-          species
-            .activePlants()
-            .map((daysGrown, idx) => (
-              <PlantWrapper
-                key={`${species.type}-${idx}`}
-                idx={idx}
-                plantType={species.type}
-                daysGrown={daysGrown}
-                markFinishedGrowing={incrementPlantsEndIdx}
-              />
-            ))
-        ),
+        Object.values(HtmlPlantTypeToSpecies)
+          .filter((p) => includedPlants.has(p.type))
+          .flatMap((species) =>
+            species
+              .activePlants()
+              .map((daysGrown, idx) => (
+                <PlantWrapper
+                  key={`${species.type}-${idx}`}
+                  idx={idx}
+                  plantType={species.type}
+                  daysGrown={daysGrown}
+                  markFinishedGrowing={incrementPlantsEndIdx}
+                />
+              ))
+          ),
         ServerClientRandomGenerator
       )
     );
@@ -78,13 +84,18 @@ export function Garden() {
 
   return (
     <div id="garden" ref={ref}>
+      {isDevelopment() && (
+        <>
+          <div id="debugActions"></div>
+        </>
+      )}
       {plantsToRender.slice(0, plantsEndIdx)}
     </div>
   );
 }
 
 const GardenWidth = 2400;
-const GardenHeight = 1400;
+const GardenHeight = 2400;
 function PlantWrapper({
   plantType,
   daysGrown,

@@ -45,7 +45,7 @@ body {
   }
 
   &.guide {
-    width: max(500px, 100%);
+    width: max(800px, 100%);
   }
 }
 
@@ -57,7 +57,7 @@ body {
   position: relative;
   // NOTE: keep this in sync w PlantWrapper for random generation
   width: 2400px;
-  height: 1400px;
+  height: 2400px;
 }
 
 main {
@@ -128,6 +128,15 @@ footer {
 
 .htmlPlant {
   position: relative;
+
+  li {
+    color: dimgray;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  img {
+    // background: rgba(255, 255, 255, 0.8);
+  }
 }
 
 .plantWrapper {
@@ -250,13 +259,14 @@ kbd {
   padding: 2em;
   margin: 0 auto;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1200px) {
     padding: 1em;
+    overflow-x: auto;
   }
 
   .fieldGuideTable {
     width: fit-content;
-    max-width: 800px;
+    max-width: 1200px;
     overflow: hidden;
     tbody {
       tr {
@@ -285,7 +295,7 @@ kbd {
   height: 100%;
   width: 100vw;
   top: 0px;
-  background: #7d9158e7;
+  background: rgba(125, 145, 88, 0.95);
   transition: height 1s ease-in-out;
   overflow-y: auto;
 
@@ -325,7 +335,7 @@ kbd {
 .marquee > .marqueeContent {
   display: inline-block;
   will-change: transform;
-  animation: marquee 17s linear infinite;
+  animation: marquee 8s linear infinite;
 
   .date {
     &:hover {
@@ -352,7 +362,7 @@ kbd {
 
 @keyframes marquee {
   0% {
-    transform: translate(0%, 0);
+    transform: translate(2%, 0);
   }
   100% {
     transform: translate(-8%, 0);

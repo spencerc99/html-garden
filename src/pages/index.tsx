@@ -16,7 +16,7 @@ import { Marquee } from "../components/Marquee";
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
-export const StartDate = new Date("2023-03-15");
+export const StartDate = new Date("2023-12-21");
 export const GardenGrowingDays = Math.floor(
   (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
 );
