@@ -11,6 +11,12 @@ import {
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
 import Guide from "./guide";
+import { VisitorCount } from "../components/VisitorCount";
+import type { PlayProvider as PlayProviderType } from "@playhtml/react";
+const PlayProvider = dynamic(
+  () => import("@playhtml/react").then((c) => c.PlayProvider),
+  { ssr: false }
+) as typeof PlayProviderType;
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
@@ -48,6 +54,11 @@ export default function Home() {
   const hasClickedRef = useRef(false);
 
   const [hasLoaded, setHasLoaded] = useState(false);
+  // const [plantsIdentified, setPlantsIdentified] = useGlobalState(
+  //   "plantsIdentified",
+  //   0
+  // );
+  const plantsIdentified = 0;
 
   useEffect(() => {
     const startSoundHandler = () => {
@@ -98,6 +109,9 @@ export default function Home() {
         <title>html garden</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      <PlayProvider>
+        <VisitorCount />
+      </PlayProvider>
       <hgroup>
         <h1>html garden</h1>
         <p>
@@ -112,7 +126,7 @@ export default function Home() {
           we are in {seasonName}.{" "}
           {hasLoaded
             ? `the garden has been growing for
-          ${GardenGrowingDays} days.`
+          ${GardenGrowingDays} days. ${plantsIdentified} plants identified.`
             : null}
         </p>
         <p>
