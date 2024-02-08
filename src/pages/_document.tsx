@@ -19,7 +19,7 @@ export default function Document() {
         ></script>
       </Head>
       <body>
-        <Marquee
+        {/* <Marquee
           items={[
             <>
               <Link href="/timelapse">timelapse</Link> now showing at the{" "}
@@ -31,7 +31,7 @@ export default function Document() {
             <>come back in ❄️ for a new planting</>,
           ]}
           separator={" 🌑 "}
-        ></Marquee>
+        ></Marquee> */}
         <Main />
         <NextScript />
       </body>

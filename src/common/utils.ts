@@ -53,3 +53,7 @@ export function isDevelopment(): boolean {
 export function randomChoice<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+export function pluralize(word: string, count: number) {
+  return count > 1 ? `${word}s` : word;
+}
