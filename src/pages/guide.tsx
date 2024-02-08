@@ -8,6 +8,7 @@ import { useStickyState } from "../common/utils";
 import { HtmlPlant } from "../components/HtmlPlant";
 import "../styles/guide.module.scss";
 import { jsxJoin } from "../components/Marquee";
+import Link from "next/link";
 
 export default function Guide() {
   const [seenPlants] = useStickyState("seenPlants", []);
@@ -114,6 +115,13 @@ export default function Guide() {
             l-systems
           </a>
           , and the open-source <a href="https://p5js.org/">p5js</a> community.
+        </p>
+        <p>
+          A <Link href="/timelapse">timelapse</Link> showed at the{" "}
+          <a href="https://deyoungopen2023.artcall.org/submissions/qr-view/424024">
+            de Young Museum
+          </a>{" "}
+          from October 2023-January 2024.
         </p>
       </details>
       <br />

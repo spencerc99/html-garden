@@ -6,6 +6,7 @@ $color-elite-teal: #10302d;
 $color-olympic-blue: #5f93d8;
 $color-darkest-forest: #293b1a;
 $color-white: #f9f9f2;
+// $color-darkest-forest: #477720;
 
 html,
 body {
@@ -115,10 +116,10 @@ footer {
   width: 80px;
   transition: transform 0.2s ease-in-out;
   font-size: 80px;
-  text-shadow: 0 6px 5px rgba($color-darkest-forest, 0.4);
+  text-shadow: 0 15px 8px rgba($color-darkest-forest, 0.9);
 
   &:is(img) {
-    box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
+    box-shadow: 0 0 20px 8px rgba($color-darkest-forest, 0.9);
   }
 
   &:hover {
@@ -367,4 +368,14 @@ kbd {
   100% {
     transform: translate(-8%, 0);
   }
+}
+
+.visitorCount {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px 16px;
+  border: 1px solid $color-elite-teal;
+  background: $color-olympic-blue;
+  border-radius: 12px;
 }
