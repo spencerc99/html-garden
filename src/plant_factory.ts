@@ -206,7 +206,7 @@ interface ElementTagInfo {
   tag: keyof HTMLElementTagNameMap;
   innerValue?: string;
   extraProps?: Record<string, any> | (() => Record<string, any>);
-  style?: () => Partial<CSSStyleDeclaration> | Partial<CSSStyleDeclaration>;
+  style?: Partial<CSSStyleDeclaration> | (() => Partial<CSSStyleDeclaration>);
 }
 
 export class HtmlLSystem extends LSystemBase {

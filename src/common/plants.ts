@@ -623,36 +623,43 @@ export const HtmlPlantTypeToSpecies = {
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "square" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "disc" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "circle" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "decimal" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "georgian" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "trad-chinese-informal" },
           },
           {
             tag: "li",
             innerValue: "",
+            // @ts-ignore
             style: { "list-style-type": "kanada" },
           },
         ],
