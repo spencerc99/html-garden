@@ -45,8 +45,29 @@ export default function Home() {
   const [seenPlants, setSeenPlants] = useStickyState("seenPlants", []);
   const [soundOn, setSoundOn] = useStickyState("soundOn", false);
   const audioRef = useRef<HTMLAudioElement>();
+  const hasClickedRef = useRef(false);
 
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const startSoundHandler = () => {
+      if (hasClickedRef.current) {
+        return;
+      }
+      if (!hasClickedRef.current) {
+        hasClickedRef.current = true;
+        document.removeEventListener("click", startSoundHandler);
+      }
+      if (soundOn) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    };
+    document.addEventListener("click", startSoundHandler);
+
+    return () => document.removeEventListener("click", startSoundHandler);
+  });
 
   useEffect(() => {
     if (currentSpecies.filter((c) => !seenPlants.includes(c)).length) {

@@ -16,19 +16,44 @@ export default function Document() {
         ></script>
       </Head>
       <body>
-        {/* <Marquee
+        <Marquee
           items={[
             <>
-              <Link href="/timelapse">timelapse</Link> now showing at the{" "}
-              <a href="https://deyoungopen2023.artcall.org/submissions/qr-view/424024">
-                de Young Museum
-              </a>{" "}
-              through January 2024
+              <Link href="/timelapse">timelapse</Link>
             </>,
-            <>come back in ❄️ for a new planting</>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
+            <>
+              <Link href="/timelapse">timelapse</Link>
+            </>,
           ]}
           separator={" 🌑 "}
-        ></Marquee> */}
+        ></Marquee>
         <Main />
         <NextScript />
       </body>
