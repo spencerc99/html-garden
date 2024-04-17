@@ -6,10 +6,7 @@ export default function Document() {
     <Html data-theme="cmyk">
       <Head lang="en">
         <meta charSet="UTF-8" />
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🌿</text></svg>"
-        ></link>
+        <link rel="icon" href="/apple_touch_icon.png"></link>
         <link rel="apple-touch-icon" href="./apple-touch-icon.png"></link>
         <script
           defer
@@ -19,7 +16,7 @@ export default function Document() {
         ></script>
       </Head>
       <body>
-        <Marquee
+        {/* <Marquee
           items={[
             <>
               <Link href="/timelapse">timelapse</Link> now showing at the{" "}
@@ -31,7 +28,7 @@ export default function Document() {
             <>come back in ❄️ for a new planting</>,
           ]}
           separator={" 🌑 "}
-        ></Marquee>
+        ></Marquee> */}
         <Main />
         <NextScript />
       </body>

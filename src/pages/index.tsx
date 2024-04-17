@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import seedrandom from "seedrandom";
 import {
   currentSeason,
@@ -43,6 +43,8 @@ export default function Home() {
     .map((s) => s.type);
   const numSpeciesBlooming = currentSpecies.length;
   const [seenPlants, setSeenPlants] = useStickyState("seenPlants", []);
+  const [soundOn, setSoundOn] = useStickyState("soundOn", false);
+  const audioRef = useRef<HTMLAudioElement>();
 
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -52,6 +54,18 @@ export default function Home() {
     }
     setHasLoaded(true);
   }, [currentSpecies]);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      return;
+    }
+
+    if (soundOn) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [soundOn, audioRef]);
 
   function openGuide() {
     document.querySelector(".guideContainer").classList.remove("hidden");
@@ -80,8 +94,19 @@ export default function Home() {
           ${GardenGrowingDays} days.`
             : null}
         </p>
+        <p>
+          enable sound?{" "}
+          <input
+            type="checkbox"
+            checked={soundOn}
+            onChange={() => {
+              setSoundOn(!soundOn);
+            }}
+          />
+        </p>
       </hgroup>
       <main>
+        <audio src="/html-garden-sound.m4a" ref={audioRef} />
         <Garden />
       </main>
       <footer>
