@@ -11,7 +11,10 @@ import {
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
 import Guide from "./guide";
-import { VisitorCount } from "../components/VisitorCount";
+import {
+  ActiveVisitorCount,
+  ClickCount,
+} from "../components/ActiveVisitorCount";
 import type { PlayProvider as PlayProviderType } from "@playhtml/react";
 const PlayProvider = dynamic(
   () => import("@playhtml/react").then((c) => c.PlayProvider),
@@ -20,6 +23,10 @@ const PlayProvider = dynamic(
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
+export const SeedDate = new Date("2023-03-15");
+const GardenAge = Math.floor(
+  (new Date().getTime() - SeedDate.getTime()) / 1000 / 60 / 60 / 24
+);
 export const StartDate = new Date("2023-12-21");
 export const GardenGrowingDays = Math.floor(
   (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
@@ -54,11 +61,6 @@ export default function Home() {
   const hasClickedRef = useRef(false);
 
   const [hasLoaded, setHasLoaded] = useState(false);
-  // const [plantsIdentified, setPlantsIdentified] = useGlobalState(
-  //   "plantsIdentified",
-  //   0
-  // );
-  const plantsIdentified = 0;
 
   useEffect(() => {
     const startSoundHandler = () => {
@@ -110,7 +112,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <PlayProvider>
-        <VisitorCount />
+        <div id="stats">
+          <ClickCount />
+          <ActiveVisitorCount />
+        </div>
       </PlayProvider>
       <hgroup>
         <h1>html garden</h1>
@@ -123,11 +128,9 @@ export default function Home() {
           {currentSpecies.length > 1 ? "are" : "is"} blooming.
         </p>
         <p>
-          we are in {seasonName}.{" "}
-          {hasLoaded
-            ? `the garden has been growing for
-          ${GardenGrowingDays} days. ${plantsIdentified} plants identified.`
-            : null}
+          We are in {seasonName}. The garden has been growing for{" "}
+          {GardenGrowingDays} days this season and was seeded {GardenAge} days
+          ago.
         </p>
         <p>
           enable sound?{" "}

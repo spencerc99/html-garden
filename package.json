@@ -11,8 +11,9 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@playhtml/react": "^0.2.0",
+    "@playhtml/react": "latest",
     "@vercel/analytics": "^1.0.1",
+    "dayjs": "^1.11.11",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
