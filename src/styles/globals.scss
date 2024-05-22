@@ -370,12 +370,26 @@ kbd {
   }
 }
 
-.visitorCount {
-  position: absolute;
+#stats {
+  position: fixed;
   top: 12px;
   right: 12px;
+  display: flex;
+  gap: 0.3em;
+  z-index: 10;
+}
+
+.visitorCount {
   padding: 8px 16px;
   border: 1px solid $color-elite-teal;
+  background: $color-ghoul;
+  border-radius: 12px;
+}
+
+#clickCount {
+  padding: 8px 16px;
+  border: 1px solid $color-elite-teal;
+
   background: $color-olympic-blue;
   border-radius: 12px;
 }
