@@ -37,7 +37,7 @@ export function ClickCount() {
       {({ data, setData }) => {
         const { clicks } = data;
 
-        return <div id="clickCount">{clicks} 💦</div>;
+        return <div id="clickCount">{clicks} 💧</div>;
       }}
     </CanPlayElement>
   );
