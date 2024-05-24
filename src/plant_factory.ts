@@ -205,7 +205,8 @@ export class LSystem extends LSystemBase {
 interface ElementTagInfo {
   tag: keyof HTMLElementTagNameMap;
   innerValue?: string;
-  extraProps?: Record<string, any>;
+  extraProps?: Record<string, any> | (() => Record<string, any>);
+  style?: Partial<CSSStyleDeclaration> | (() => Partial<CSSStyleDeclaration>);
 }
 
 export class HtmlLSystem extends LSystemBase {
@@ -330,19 +331,21 @@ export class HtmlLSystem extends LSystemBase {
       tag,
       innerValue = tag,
       extraProps = {},
+      style = {},
     } = randomElement(this.tagInfos);
     const child = document.createElement(tag);
     child.innerText = IS_DEBUGGING
       ? `${innerValue}-${this.elementsDrawn}`
       : innerValue;
 
-    for (const [prop, val] of Object.entries(extraProps)) {
+    for (const [prop, val] of Object.entries(
+      typeof extraProps === "function" ? extraProps() : extraProps
+    )) {
       child[prop] = val;
     }
 
     // @ts-ignore
     child.style = Object.entries({
-      ...child.style,
       // fill in rotation to match with rotation of the line
       transform: `rotate(${rotation}deg)`,
       ...(this.useStrictDimensions
@@ -372,6 +375,7 @@ export class HtmlLSystem extends LSystemBase {
             )}%)`,
           }
         : {}),
+      ...(typeof style === "function" ? style() : style),
     })
       .map(([key, value]) => `${key}: ${value}`)
       .join(";");

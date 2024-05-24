@@ -16,7 +16,7 @@ export default function Document() {
         ></script>
       </Head>
       <body>
-        <Marquee
+        {/* <Marquee
           items={[
             <>
               <Link href="/timelapse">timelapse</Link>
@@ -53,7 +53,7 @@ export default function Document() {
             </>,
           ]}
           separator={" 🌑 "}
-        ></Marquee>
+        ></Marquee> */}
         <Main />
         <NextScript />
       </body>
