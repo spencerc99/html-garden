@@ -9,13 +9,15 @@ import { HtmlPlant } from "../components/HtmlPlant";
 import "../styles/guide.module.scss";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
-
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 interface PlantParams {
   d: string; // plant date in format MM-DD-YY
   s: string; // species
   p: string; // person
 }
 
+// TODO: add build mode via build query param
 export default function Plant() {
   const router = useRouter();
 
@@ -30,10 +32,11 @@ export default function Plant() {
 
   if (!router.isReady) return null; // or a loading indicator
 
-  const startDate = dayjs(
-    (router.query.d as string) || new Date().toISOString(),
-    "MM-DD-YY"
-  );
+  console.log(router.query.d);
+  const startDate = router.query.d
+    ? dayjs(router.query.d as string, "MM-DD-YY")
+    : dayjs();
+  console.log(dayjs().format("MM-DD-YY"));
   const person = (router.query.p as string) || "";
   console.log(router.query);
   const species =
