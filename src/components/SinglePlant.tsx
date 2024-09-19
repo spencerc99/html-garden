@@ -55,12 +55,20 @@ export default function Plant() {
         padding: ".5em 1em",
         textAlign: "center",
         overflow: "hidden",
+        color: "#d7edc4",
+        fontFamily: "monospace",
       }}
       className="singlePlant"
     >
       <h1
         style={{
           zIndex: 1,
+          lineHeight: "1",
+          backgroundColor: "hsla(82, 34%, 35%, 0.8)",
+          width: "100%",
+          position: "fixed",
+          top: "-.7em",
+          padding: "1em .2em",
         }}
       >
         {person ? `${person}'s` : "Your"} {GenusName} {type}
@@ -87,7 +95,7 @@ export default function Plant() {
           margin: "0 auto",
         }}
       >
-        planted on {startDate.format("MMM DD, YYYY")}
+        planted {daysGrown} days ago on {startDate.format("MMM DD, YYYY")}
       </div>
     </div>
   );
