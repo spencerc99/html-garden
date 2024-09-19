@@ -21,7 +21,15 @@ function daysGrownToDate(daysGrown: number): Date {
 export function Garden() {
   const ref = useRef<HTMLDivElement>();
   const [includedPlants, setIncludedPlants] = useState<Set<HtmlPlantType>>(
-    new Set(Object.values(HtmlPlantType))
+    // new Set(Object.values(HtmlPlantType))
+    new Set([
+      HtmlPlantType.Basis,
+      HtmlPlantType.Espandre,
+      HtmlPlantType.Iconos,
+      HtmlPlantType.Porros,
+      HtmlPlantType.Pictus,
+      HtmlPlantType.Liste,
+    ])
     // new Set([HtmlPlantType.Pictus])
   );
   const numPlants = useMemo(

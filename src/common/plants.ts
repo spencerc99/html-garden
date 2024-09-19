@@ -355,7 +355,7 @@ export const HtmlPlantTypeToSpecies = {
   [HtmlPlantType.Espandre]: {
     type: HtmlPlantType.Espandre,
     whereGrowsDescription:
-      "where letters are scattered and  words become prayer",
+      "where letters are scattered and words become prayer",
     htmlTags: ["span"],
     getLSystem: (
       p5: p5Type,
