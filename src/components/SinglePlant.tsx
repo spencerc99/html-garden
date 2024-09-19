@@ -16,11 +16,6 @@ interface PlantParams {
   p: string; // person
 }
 
-function useSearchParams() {
-  const router = useRouter();
-  return router.query;
-}
-
 export default function Plant() {
   const router = useRouter();
 
@@ -36,7 +31,8 @@ export default function Plant() {
   if (!router.isReady) return null; // or a loading indicator
 
   const startDate = dayjs(
-    (router.query.d as string) || new Date().toISOString()
+    (router.query.d as string) || new Date().toISOString(),
+    "MM-DD-YY"
   );
   const person = (router.query.p as string) || "";
   console.log(router.query);
