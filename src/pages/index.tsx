@@ -11,6 +11,8 @@ import {
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
 import Guide from "./guide";
+import Link from "next/link";
+import { Marquee } from "../components/Marquee";
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
@@ -98,6 +100,44 @@ export default function Home() {
         <title>html garden</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      <Marquee
+        items={[
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+          <>
+            <Link href="/timelapse">timelapse</Link>
+          </>,
+        ]}
+        separator={" 🌑 "}
+      ></Marquee>
       <hgroup>
         <h1>html garden</h1>
         <p>

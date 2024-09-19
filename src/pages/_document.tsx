@@ -16,44 +16,6 @@ export default function Document() {
         ></script>
       </Head>
       <body>
-        <Marquee
-          items={[
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-            <>
-              <Link href="/timelapse">timelapse</Link>
-            </>,
-          ]}
-          separator={" 🌑 "}
-        ></Marquee>
         <Main />
         <NextScript />
       </body>
