@@ -7,20 +7,30 @@ export const GenusName = "Elementum";
 export const GenusNamePlural = "Elementi";
 export const FrameRate = 15;
 
-const referenceDate = new Date();
-const dayOfYear = Math.floor(
-  (referenceDate.getTime() -
-    new Date(referenceDate.getFullYear(), 0, 0).getTime()) /
-    1000 /
-    60 /
-    60 /
-    24
-);
+function getReferenceDate(): Date {
+  return new Date();
+}
+
+function getDayOfYear(): number {
+  const referenceDate = getReferenceDate();
+  return Math.floor(
+    (referenceDate.getTime() -
+      new Date(referenceDate.getFullYear(), 0, 0).getTime()) /
+      1000 /
+      60 /
+      60 /
+      24
+  );
+}
 
 type Season = "spring" | "summer" | "fall" | "winter";
 
 // retrieve the current season based on equinox and solstice dates
 export function currentSeason(): Season {
+<<<<<<< Updated upstream
+=======
+  const dayOfYear = getDayOfYear();
+>>>>>>> Stashed changes
   if (dayOfYear >= 79 && dayOfYear < 172) {
     return "spring";
   } else if (dayOfYear >= 172 && dayOfYear < 266) {
@@ -34,8 +44,15 @@ export function currentSeason(): Season {
 
 // Get the start date of the current season
 export function getSeasonStartDate(): Date {
+<<<<<<< Updated upstream
   const year = referenceDate.getFullYear();
   const season = currentSeason();
+=======
+  const referenceDate = getReferenceDate();
+  const year = referenceDate.getFullYear();
+  const season = currentSeason();
+  const dayOfYear = getDayOfYear();
+>>>>>>> Stashed changes
 
   if (season === "spring") {
     // March 20 (day 79)
@@ -58,7 +75,13 @@ export function getSeasonStartDate(): Date {
 // Get a unique key for the current season (e.g., "2025-spring")
 export function getSeasonKey(): string {
   const season = currentSeason();
+<<<<<<< Updated upstream
   const year = referenceDate.getFullYear();
+=======
+  const referenceDate = getReferenceDate();
+  const year = referenceDate.getFullYear();
+  const dayOfYear = getDayOfYear();
+>>>>>>> Stashed changes
   // For winter that spans years, use the year when winter started
   if (season === "winter" && dayOfYear < 79) {
     return `${year - 1}-${season}`;
