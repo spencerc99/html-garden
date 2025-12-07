@@ -7,6 +7,7 @@ import {
   GenusNamePlural,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
+  getSeasonStartDate,
 } from "../common/plants";
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
@@ -29,7 +30,8 @@ export const SeedDate = new Date("2023-03-15");
 const GardenAge = Math.floor(
   (new Date().getTime() - SeedDate.getTime()) / 1000 / 60 / 60 / 24
 );
-export const StartDate = new Date("2023-12-21");
+// the start of the current season
+export const StartDate = getSeasonStartDate();
 export const GardenGrowingDays = Math.floor(
   (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
 );
