@@ -45,3 +45,15 @@ export function shuffleArray<T = any>(arr: T[], randGen?: () => number): T[] {
   }
   return newArr;
 }
+
+export function isDevelopment(): boolean {
+  return window.location.href.includes("localhost");
+}
+
+export function randomChoice<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function pluralize(word: string, count: number) {
+  return count > 1 ? `${word}s` : word;
+}

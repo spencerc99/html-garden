@@ -7,6 +7,8 @@ import {
 import { useStickyState } from "../common/utils";
 import { HtmlPlant } from "../components/HtmlPlant";
 import "../styles/guide.module.scss";
+import { jsxJoin } from "../components/Marquee";
+import Link from "next/link";
 
 export default function Guide() {
   const [seenPlants] = useStickyState("seenPlants", []);
@@ -28,6 +30,19 @@ export default function Guide() {
           {GenusName} {type}
         </td>
         <td>{info.whereGrowsDescription}</td>
+        <td>
+          {jsxJoin(
+            info.htmlTags.map((tag) => (
+              <a
+                href={`https://developer.mozilla.org/en-US/docs/Web/HTML/Element/${tag}`}
+                key={tag}
+              >
+                {tag}
+              </a>
+            )),
+            ", "
+          )}
+        </td>
         <td>
           {seenBefore ? (
             <HtmlPlant
@@ -101,13 +116,21 @@ export default function Guide() {
           </a>
           , and the open-source <a href="https://p5js.org/">p5js</a> community.
         </p>
+        <p>
+          A <Link href="/timelapse">timelapse</Link> showed at the{" "}
+          <a href="https://deyoungopen2023.artcall.org/submissions/qr-view/424024">
+            de Young Museum
+          </a>{" "}
+          from October 2023-January 2024.
+        </p>
       </details>
       <br />
       <table className="fieldGuideTable">
         <thead>
           <tr>
             <th>Species</th>
-            <th>Where Found</th>
+            <th>Location</th>
+            <th>HTML Tags</th>
             <th>Sample</th>
           </tr>
         </thead>

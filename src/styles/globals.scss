@@ -6,6 +6,7 @@ $color-elite-teal: #10302d;
 $color-olympic-blue: #5f93d8;
 $color-darkest-forest: #293b1a;
 $color-white: #f9f9f2;
+// $color-darkest-forest: #477720;
 
 html,
 body {
@@ -45,7 +46,7 @@ body {
   }
 
   &.guide {
-    width: max(500px, 100%);
+    width: max(800px, 100%);
   }
 }
 
@@ -57,7 +58,7 @@ body {
   position: relative;
   // NOTE: keep this in sync w PlantWrapper for random generation
   width: 2400px;
-  height: 1400px;
+  height: 2400px;
 }
 
 main {
@@ -115,10 +116,10 @@ footer {
   width: 80px;
   transition: transform 0.2s ease-in-out;
   font-size: 80px;
-  text-shadow: 0 6px 5px rgba($color-darkest-forest, 0.4);
+  text-shadow: 0 15px 8px rgba($color-darkest-forest, 0.9);
 
   &:is(img) {
-    box-shadow: 0 0 10px 5px rgba($color-darkest-forest, 0.4);
+    box-shadow: 0 0 20px 8px rgba($color-darkest-forest, 0.9);
   }
 
   &:hover {
@@ -128,6 +129,15 @@ footer {
 
 .htmlPlant {
   position: relative;
+
+  li {
+    color: dimgray;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  img {
+    // background: rgba(255, 255, 255, 0.8);
+  }
 }
 
 .plantWrapper {
@@ -250,13 +260,14 @@ kbd {
   padding: 2em;
   margin: 0 auto;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1200px) {
     padding: 1em;
+    overflow-x: auto;
   }
 
   .fieldGuideTable {
     width: fit-content;
-    max-width: 800px;
+    max-width: 1200px;
     overflow: hidden;
     tbody {
       tr {
@@ -285,7 +296,7 @@ kbd {
   height: 100%;
   width: 100vw;
   top: 0px;
-  background: #7d9158e7;
+  background: rgba(125, 145, 88, 0.95);
   transition: height 1s ease-in-out;
   overflow-y: auto;
 
@@ -325,7 +336,7 @@ kbd {
 .marquee > .marqueeContent {
   display: inline-block;
   will-change: transform;
-  animation: marquee 17s linear infinite;
+  animation: marquee 8s linear infinite;
 
   .date {
     &:hover {
@@ -352,9 +363,33 @@ kbd {
 
 @keyframes marquee {
   0% {
-    transform: translate(0%, 0);
+    transform: translate(2%, 0);
   }
   100% {
     transform: translate(-8%, 0);
   }
+}
+
+#stats {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 0.3em;
+  z-index: 10;
+}
+
+.visitorCount {
+  padding: 8px 16px;
+  border: 1px solid $color-elite-teal;
+  background: $color-ghoul;
+  border-radius: 12px;
+}
+
+#clickCount {
+  padding: 8px 16px;
+  border: 1px solid $color-elite-teal;
+
+  background: $color-olympic-blue;
+  border-radius: 12px;
 }

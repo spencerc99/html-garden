@@ -7,16 +7,31 @@ import {
   GenusNamePlural,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
+  getSeasonStartDate,
 } from "../common/plants";
 import { useStickyState } from "../common/utils";
 import dynamic from "next/dynamic";
 import Guide from "./guide";
 import Link from "next/link";
 import { Marquee } from "../components/Marquee";
+import {
+  ActiveVisitorCount,
+  ClickCount,
+} from "../components/ActiveVisitorCount";
+import type { PlayProvider as PlayProviderType } from "@playhtml/react";
+const PlayProvider = dynamic(
+  () => import("@playhtml/react").then((c) => c.PlayProvider),
+  { ssr: false }
+) as typeof PlayProviderType;
 
 const Garden = dynamic(() => import("../components/Garden"), { ssr: false });
 
-export const StartDate = new Date("2023-03-15");
+export const SeedDate = new Date("2023-03-15");
+const GardenAge = Math.floor(
+  (new Date().getTime() - SeedDate.getTime()) / 1000 / 60 / 60 / 24
+);
+// the start of the current season
+export const StartDate = getSeasonStartDate();
 export const GardenGrowingDays = Math.floor(
   (new Date().getTime() - StartDate.getTime()) / 1000 / 60 / 60 / 24
 );
@@ -138,6 +153,12 @@ export default function Home() {
         ]}
         separator={" 🌑 "}
       ></Marquee>
+      <PlayProvider>
+        <div id="stats">
+          <ClickCount />
+          <ActiveVisitorCount />
+        </div>
+      </PlayProvider>
       <hgroup>
         <h1>html garden</h1>
         <p>
@@ -149,11 +170,9 @@ export default function Home() {
           {currentSpecies.length > 1 ? "are" : "is"} blooming.
         </p>
         <p>
-          we are in {seasonName}.{" "}
-          {hasLoaded
-            ? `the garden has been growing for
-          ${GardenGrowingDays} days.`
-            : null}
+          We are in {seasonName}. The garden has been growing for{" "}
+          {GardenGrowingDays} days this season and was seeded {GardenAge} days
+          ago.
         </p>
         <p>
           enable sound?{" "}
