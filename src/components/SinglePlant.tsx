@@ -41,15 +41,21 @@ export default function Plant() {
     if (isBouquet) {
       // Select 3-5 random species for bouquet mode
       const allSpecies = Object.keys(HtmlPlantType);
-      const count = Math.floor(randomGenerator() * 3) + 3; // 3-5 species
-      const selected: string[] = [];
 
-      for (let i = 0; i < count; i++) {
-        const idx = Math.floor(randomGenerator() * allSpecies.length);
-        selected.push(allSpecies[idx]);
+      // Create a new seeded generator for bouquet randomness
+      const bouquetRng = seedrandom(startDate.format("MM-DD-YY") + "-bouquet");
+
+      // Determine count (3-5)
+      const count = Math.floor(bouquetRng() * 3) + 3;
+
+      // Fisher-Yates shuffle to pick unique species
+      const shuffled = [...allSpecies];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(bouquetRng() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
 
-      return selected;
+      return shuffled.slice(0, count);
     } else {
       // Single plant mode
       const species =
@@ -59,7 +65,7 @@ export default function Plant() {
         ];
       return [species];
     }
-  }, [isBouquet, router.query.s, randomGenerator, router.isReady]);
+  }, [isBouquet, router.query.s, randomGenerator, router.isReady, startDate]);
 
   // Generate title
   const title = useMemo(() => {
