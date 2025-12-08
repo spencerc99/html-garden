@@ -72,8 +72,11 @@ export default function Plant() {
     if (!router.isReady || speciesList.length === 0) return "";
 
     if (isBouquet) {
-      const genusText = person ? `${person}'s ${GenusNamePlural}` : GenusNamePlural;
-      return genusText;
+      const speciesNames = speciesList
+        .map((s) => HtmlPlantTypeToSpecies[s].type)
+        .join(", ");
+      const prefix = person ? `${person}'s ${GenusNamePlural}` : GenusNamePlural;
+      return `${prefix}: ${speciesNames}`;
     } else {
       const { type } = HtmlPlantTypeToSpecies[speciesList[0]];
       if (person) {
@@ -117,6 +120,7 @@ export default function Plant() {
           position: "fixed",
           top: "-.7em",
           padding: "1em .2em",
+          fontSize: isBouquet ? "1.5rem" : undefined,
         }}
       >
         {title}
