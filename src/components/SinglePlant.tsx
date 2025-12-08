@@ -116,7 +116,7 @@ export default function Plant() {
           width: "100%",
           position: "fixed",
           top: "-.7em",
-          padding: "1em .2em",
+          padding: ".5em .2em",
           fontSize: isBouquet ? "1.5rem" : undefined,
         }}
       >
