@@ -112,7 +112,7 @@ export default function Plant() {
         style={{
           zIndex: 1,
           lineHeight: "1",
-          backgroundColor: "hsla(82, 34%, 35%, 0.8)",
+          backgroundColor: "hsla(82, 34%, 35%, 0.6)",
           width: "100%",
           position: "fixed",
           top: "-.7em",
