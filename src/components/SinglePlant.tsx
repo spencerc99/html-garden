@@ -72,8 +72,10 @@ export default function Plant() {
       const speciesNames = speciesList
         .map((s) => HtmlPlantTypeToSpecies[s].type)
         .join(", ");
-      const prefix = person ? `${person}'s ${GenusNamePlural}` : GenusNamePlural;
-      return `${prefix}: ${speciesNames}`;
+      const prefix = person
+        ? `${person}'s ${GenusNamePlural}`
+        : GenusNamePlural;
+      return `${prefix} ${speciesNames}`;
     } else {
       const { type } = HtmlPlantTypeToSpecies[speciesList[0]];
       if (person) {
@@ -112,12 +114,13 @@ export default function Plant() {
         style={{
           zIndex: 1,
           lineHeight: "1",
-          backgroundColor: "hsla(82, 34%, 35%, 0.6)",
+          backgroundColor: "hsla(82, 34%, 35%, 0.8)",
           width: "100%",
           position: "fixed",
           top: "-.7em",
-          padding: ".5em .2em",
-          fontSize: isBouquet ? "1.5rem" : undefined,
+          padding: ".5em 1em",
+          fontSize: isBouquet ? "1rem" : undefined,
+          paddingTop: "1.5em",
         }}
       >
         {title}
@@ -126,8 +129,8 @@ export default function Plant() {
         href="/"
         style={{
           position: "fixed",
-          top: "1em",
-          right: "1em",
+          top: ".5em",
+          left: "1em",
           zIndex: 2,
           fontSize: "0.8em",
           color: "#d7edc4",
@@ -135,7 +138,7 @@ export default function Plant() {
           opacity: 0.7,
         }}
       >
-        ← garden
+        ← full garden
       </Link>
       <div
         className="plantWrapper"
