@@ -72,24 +72,23 @@ export default function Plant() {
     }
   }, [isBouquet, router.query.s, randomGenerator, router.isReady]);
 
-  // Generate title
-  const title = useMemo(() => {
-    if (!router.isReady || speciesList.length === 0) return "";
+  // Generate title and species list for display
+  const titleInfo = useMemo(() => {
+    if (!router.isReady || speciesList.length === 0)
+      return { title: "", speciesNames: "" };
 
     if (isBouquet) {
       const speciesNames = speciesList
         .map((s) => HtmlPlantTypeToSpecies[s].type)
         .join(", ");
-      const prefix = person
-        ? `${t.possessive(person)}${GenusNamePlural}`
-        : GenusNamePlural;
-      return `${prefix} ${speciesNames}`;
+      const title = person ? `${t.possessive(person)}${t.bouquet}` : t.bouquet;
+      return { title, speciesNames };
     } else {
       const { type } = HtmlPlantTypeToSpecies[speciesList[0]];
-      if (person) {
-        return `${t.possessive(person)}${GenusName} ${type}`;
-      }
-      return `${GenusName} ${type}`;
+      const title = person
+        ? `${t.possessive(person)}${GenusName} ${type}`
+        : `${GenusName} ${type}`;
+      return { title, speciesNames: "" };
     }
   }, [isBouquet, person, speciesList, router.isReady, t]);
 
@@ -121,7 +120,7 @@ export default function Plant() {
       <h1
         style={{
           zIndex: 1,
-          lineHeight: "1",
+          lineHeight: "1.2",
           backgroundColor: "hsla(82, 34%, 35%, 0.8)",
           width: "100%",
           position: "fixed",
@@ -131,7 +130,18 @@ export default function Plant() {
           paddingTop: "1.5em",
         }}
       >
-        {title}
+        {titleInfo.title}
+        {isBouquet && titleInfo.speciesNames && (
+          <div
+            style={{
+              fontSize: "0.7em",
+              marginTop: "0.3em",
+              opacity: 0.9,
+            }}
+          >
+            {titleInfo.speciesNames}
+          </div>
+        )}
       </h1>
       <Link
         href="/"
@@ -146,7 +156,7 @@ export default function Plant() {
           opacity: 0.7,
         }}
       >
-        {t.fullGarden}
+        {isBouquet ? t.fullHtmlGarden : t.fullGarden}
       </Link>
       <div
         className="plantWrapper"
