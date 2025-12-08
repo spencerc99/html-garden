@@ -29,7 +29,7 @@ export default function Plant() {
     ? dayjs(router.query.d as string, "MM-DD-YY")
     : dayjs();
   const person = (router.query.p as string) || "";
-  const isBouquet = router.query.mult === "true" || router.query.mult === "1";
+  const isBouquet = "mult" in router.query;
 
   const daysGrown = dayjs().diff(startDate, "day");
   const randomGenerator = seedrandom(startDate.format("MM-DD-YY"));
