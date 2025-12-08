@@ -2,12 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
 import {
   GenusName,
+  GenusNamePlural,
   HtmlPlantType,
   HtmlPlantTypeToSpecies,
 } from "../common/plants";
 import { HtmlPlant } from "../components/HtmlPlant";
 import "../styles/guide.module.scss";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
@@ -15,11 +17,65 @@ interface PlantParams {
   d: string; // plant date in format MM-DD-YY
   s: string; // species
   p: string; // person
+  mult: string; // bouquet mode - show multiple species
 }
 
 // TODO: add build mode via build query param
 export default function Plant() {
   const router = useRouter();
+
+  // Compute all values before any early returns to satisfy hooks rules
+  const startDate = router.query.d
+    ? dayjs(router.query.d as string, "MM-DD-YY")
+    : dayjs();
+  const person = (router.query.p as string) || "";
+  const isBouquet = router.query.mult === "true" || router.query.mult === "1";
+
+  const daysGrown = dayjs().diff(startDate, "day");
+  const randomGenerator = seedrandom(startDate.format("MM-DD-YY"));
+
+  // Generate species list based on mode
+  const speciesList = useMemo(() => {
+    if (!router.isReady) return [];
+
+    if (isBouquet) {
+      // Select 3-5 random species for bouquet mode
+      const allSpecies = Object.keys(HtmlPlantType);
+      const count = Math.floor(randomGenerator() * 3) + 3; // 3-5 species
+      const selected: string[] = [];
+
+      for (let i = 0; i < count; i++) {
+        const idx = Math.floor(randomGenerator() * allSpecies.length);
+        selected.push(allSpecies[idx]);
+      }
+
+      return selected;
+    } else {
+      // Single plant mode
+      const species =
+        Object.keys(HtmlPlantType)[
+          (router.query.s as string) ||
+            Math.floor(randomGenerator() * Object.keys(HtmlPlantType).length)
+        ];
+      return [species];
+    }
+  }, [isBouquet, router.query.s, randomGenerator, router.isReady]);
+
+  // Generate title
+  const title = useMemo(() => {
+    if (!router.isReady || speciesList.length === 0) return "";
+
+    if (isBouquet) {
+      const genusText = person ? `${person}'s ${GenusNamePlural}` : GenusNamePlural;
+      return genusText;
+    } else {
+      const { type } = HtmlPlantTypeToSpecies[speciesList[0]];
+      if (person) {
+        return `${person}'s ${GenusName} ${type}`;
+      }
+      return `${GenusName} ${type}`;
+    }
+  }, [isBouquet, person, speciesList, router.isReady]);
 
   useEffect(() => {
     document.querySelector("body").classList.add("singlePlant");
@@ -30,25 +86,8 @@ export default function Plant() {
     };
   }, []);
 
-  if (!router.isReady) return null; // or a loading indicator
+  if (!router.isReady || speciesList.length === 0) return null;
 
-  console.log(router.query.d);
-  const startDate = router.query.d
-    ? dayjs(router.query.d as string, "MM-DD-YY")
-    : dayjs();
-  console.log(dayjs().format("MM-DD-YY"));
-  const person = (router.query.p as string) || "";
-  console.log(router.query);
-  const species =
-    Object.keys(HtmlPlantType)[
-      (router.query.s as string) ||
-        Math.floor(Math.random() * Object.keys(HtmlPlantType).length)
-    ];
-  const daysGrown = dayjs().diff(startDate, "day");
-  const { type } = HtmlPlantTypeToSpecies[species];
-  const randomGenerator = seedrandom(startDate);
-  const randomRotation = Math.floor(randomGenerator() * 6) * 10 - 30;
-  const transform = `rotate(${randomRotation}deg)`;
   return (
     <div
       style={{
@@ -74,22 +113,54 @@ export default function Plant() {
           padding: "1em .2em",
         }}
       >
-        {person ? `${person}'s` : "Your"} {GenusName} {type}
+        {title}
       </h1>
+      <Link
+        href="/"
+        style={{
+          position: "fixed",
+          top: "1em",
+          right: "1em",
+          zIndex: 2,
+          fontSize: "0.8em",
+          color: "#d7edc4",
+          textDecoration: "none",
+          opacity: 0.7,
+        }}
+      >
+        ← garden
+      </Link>
       <div
         className="plantWrapper"
         style={{
-          top: "70%",
+          top: isBouquet ? "60%" : "70%",
+          display: "flex",
+          gap: isBouquet ? "2em" : "0",
+          flexWrap: "wrap",
+          justifyContent: "center",
         }}
       >
-        <HtmlPlant
-          type={type}
-          daysGrown={daysGrown}
-          idx={0}
-          style={{
-            transform,
-          }}
-        />
+        {speciesList.map((species, idx) => {
+          const { type } = HtmlPlantTypeToSpecies[species];
+          const plantRandomGenerator = seedrandom(
+            startDate.format("MM-DD-YY") + idx
+          );
+          const randomRotation =
+            Math.floor(plantRandomGenerator() * 6) * 10 - 30;
+          const transform = `rotate(${randomRotation}deg)`;
+
+          return (
+            <HtmlPlant
+              key={idx}
+              type={type}
+              daysGrown={daysGrown}
+              idx={idx}
+              style={{
+                transform,
+              }}
+            />
+          );
+        })}
       </div>
       <div
         style={{
