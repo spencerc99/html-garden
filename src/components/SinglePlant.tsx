@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { detectLocale, translations } from "../i18n/translations";
 dayjs.extend(customParseFormat);
 interface PlantParams {
   d: string; // plant date in format MM-DD-YY
@@ -23,6 +24,13 @@ interface PlantParams {
 // TODO: add build mode via build query param
 export default function Plant() {
   const router = useRouter();
+  const [locale, setLocale] = useState<"en" | "ja">("en");
+
+  useEffect(() => {
+    setLocale(detectLocale());
+  }, []);
+
+  const t = translations[locale];
 
   // Compute all values before any early returns to satisfy hooks rules
   const startDate = router.query.d
@@ -73,17 +81,17 @@ export default function Plant() {
         .map((s) => HtmlPlantTypeToSpecies[s].type)
         .join(", ");
       const prefix = person
-        ? `${person}'s ${GenusNamePlural}`
+        ? `${t.possessive(person)}${GenusNamePlural}`
         : GenusNamePlural;
       return `${prefix} ${speciesNames}`;
     } else {
       const { type } = HtmlPlantTypeToSpecies[speciesList[0]];
       if (person) {
-        return `${person}'s ${GenusName} ${type}`;
+        return `${t.possessive(person)}${GenusName} ${type}`;
       }
       return `${GenusName} ${type}`;
     }
-  }, [isBouquet, person, speciesList, router.isReady]);
+  }, [isBouquet, person, speciesList, router.isReady, t]);
 
   useEffect(() => {
     document.querySelector("body").classList.add("singlePlant");
@@ -138,7 +146,7 @@ export default function Plant() {
           opacity: 0.7,
         }}
       >
-        ← full garden
+        {t.fullGarden}
       </Link>
       <div
         className="plantWrapper"
@@ -179,7 +187,8 @@ export default function Plant() {
           margin: "0 auto",
         }}
       >
-        planted {daysGrown} days ago on {startDate.format("MMM DD, YYYY")}
+        {t.planted} {daysGrown} {t.daysAgo} {t.on}{" "}
+        {startDate.format("MMM DD, YYYY")}
       </div>
     </div>
   );
